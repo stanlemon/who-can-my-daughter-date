@@ -121,7 +121,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
   scoreThresholds: {
     excellent: 80, // Steelers (40) + No pineapple (25) + No ketchup (25) + Lutheran (10) = 100
     good: 60, // Strong approval threshold
-    acceptable: 30, // Conditional approval threshold
+    acceptable: 50, // Conditional approval threshold
   },
 
   rules: [
