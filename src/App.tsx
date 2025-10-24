@@ -15,14 +15,25 @@ const evaluator = new QuestionnaireEvaluator(
 
 function App() {
   const [result, setResult] = useState<EvaluationResult | null>(null)
+  const [showOverlay, setShowOverlay] = useState(true)
 
   const handleEvaluation = (evalResult: EvaluationResult | null) => {
     setResult(evalResult)
+    // Show overlay again when a new immediate disqualifier is triggered
+    if (evalResult?.isImmediate) {
+      setShowOverlay(true)
+    }
+  }
+
+  const handleDismissOverlay = () => {
+    setShowOverlay(false)
   }
 
   return (
     <div className="app">
-      {result?.isImmediate && <DisqualifiedOverlay message={result.message} />}
+      {result?.isImmediate && showOverlay && (
+        <DisqualifiedOverlay message={result.message} onDismiss={handleDismissOverlay} />
+      )}
 
       <header className="app-header">
         <div className="header-icon">
