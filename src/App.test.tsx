@@ -9,17 +9,22 @@ describe('App', () => {
     expect(heading).toHaveTextContent('Who can my daughter date?')
   })
 
+  it('renders the subtitle', () => {
+    render(<App />)
+    expect(screen.getByText('Answer these questions to find out...')).toBeInTheDocument()
+  })
+
   it('renders the header element', () => {
     render(<App />)
     const header = screen.getByRole('banner')
     expect(header).toBeInTheDocument()
   })
 
-  it('renders icon demo section', () => {
+  it('renders the questionnaire', () => {
     render(<App />)
-    expect(screen.getByText('Dating Pool')).toBeInTheDocument()
-    expect(screen.getByText('Age Calculator')).toBeInTheDocument()
-    expect(screen.getByText('Compatibility')).toBeInTheDocument()
+    // Check for one of the questions
+    expect(screen.getByText('They root for ___ in football')).toBeInTheDocument()
+    expect(screen.getByText('Pineapple belongs on pizza')).toBeInTheDocument()
   })
 
   it('renders main content area', () => {

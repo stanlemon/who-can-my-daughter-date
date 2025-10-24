@@ -1,7 +1,20 @@
-import { Heart, Users, Calendar } from 'lucide-react'
+import { Heart } from 'lucide-react'
+import { Questionnaire } from './components/Questionnaire'
+import { QuestionnaireEvaluator } from './utils/evaluator'
+import { questionnaireConfig } from './config/questionnaire'
 import './App.css'
 
+const evaluator = new QuestionnaireEvaluator(
+  questionnaireConfig.questions,
+  questionnaireConfig.rules
+)
+
 function App() {
+  // Evaluation result handler - will be used in Phase 3 and 5
+  const handleEvaluation = () => {
+    // TODO: Handle evaluation result in next phases
+  }
+
   return (
     <div className="app">
       <header className="app-header">
@@ -9,22 +22,14 @@ function App() {
           <Heart size={48} />
         </div>
         <h1>Who can my daughter date?</h1>
+        <p className="app-subtitle">Answer these questions to find out...</p>
       </header>
       <main className="app-main">
-        <div className="icon-demo">
-          <div className="icon-item">
-            <Users size={32} />
-            <span>Dating Pool</span>
-          </div>
-          <div className="icon-item">
-            <Calendar size={32} />
-            <span>Age Calculator</span>
-          </div>
-          <div className="icon-item">
-            <Heart size={32} />
-            <span>Compatibility</span>
-          </div>
-        </div>
+        <Questionnaire
+          questions={questionnaireConfig.questions}
+          evaluator={evaluator}
+          onEvaluation={handleEvaluation}
+        />
       </main>
     </div>
   )
