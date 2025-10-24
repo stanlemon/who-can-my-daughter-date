@@ -9,6 +9,7 @@ describe('ResultSummary', () => {
       verdict: 'approved',
       message: 'They stand a chance at approval.',
       isImmediate: false,
+      score: 15,
     }
 
     it('renders approved status', () => {
@@ -31,6 +32,7 @@ describe('ResultSummary', () => {
       verdict: 'conditional',
       message: 'They need to make major changes.',
       isImmediate: false,
+      score: 5,
     }
 
     it('renders conditional status', () => {
@@ -53,6 +55,7 @@ describe('ResultSummary', () => {
       verdict: 'rejected',
       message: 'This is unforgivable.',
       isImmediate: false,
+      score: -5,
     }
 
     it('renders rejected status', () => {
@@ -75,6 +78,7 @@ describe('ResultSummary', () => {
       verdict: 'immediate_no',
       message: 'Deal-breaker',
       isImmediate: true,
+      score: -Infinity,
     }
 
     it('does not render for immediate disqualifiers', () => {

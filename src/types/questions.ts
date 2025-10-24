@@ -5,7 +5,10 @@ export interface AnswerOption {
   label: string
   // If true, this answer immediately disqualifies the candidate
   immediateDisqualifier?: boolean
-  // Tags for use in combination rules
+  // Numeric weight for this answer (can be positive or negative)
+  // Higher weights are better, negative weights are red flags
+  weight?: number
+  // Tags for use in combination rules (kept for compatibility/additional logic)
   tags?: string[]
 }
 
@@ -24,6 +27,7 @@ export interface EvaluationResult {
   verdict: VerdictType
   message: string
   isImmediate: boolean
+  score: number // Total calculated score
 }
 
 export interface RuleCondition {
@@ -35,15 +39,25 @@ export interface RuleCondition {
 export interface EvaluationRule {
   id: string
   description: string
-  // All conditions must be met for this rule to apply
-  conditions: RuleCondition[]
+  // All conditions must be met for this rule to apply (optional - for complex logic)
+  conditions?: RuleCondition[]
   verdict: VerdictType
   message: string
   // Higher priority rules are evaluated first
   priority: number
+  // Weight-based thresholds
+  minScore?: number // Rule applies if score >= minScore
+  maxScore?: number // Rule applies if score <= maxScore
 }
 
 export interface QuestionnaireConfig {
   questions: Question[]
   rules: EvaluationRule[]
+  // Optional: Define score ranges for verdicts
+  scoreThresholds?: {
+    excellent: number // Score >= this is excellent
+    good: number // Score >= this is good
+    acceptable: number // Score >= this is acceptable
+    // Below acceptable is problematic
+  }
 }

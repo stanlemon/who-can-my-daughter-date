@@ -26,11 +26,31 @@ export class QuestionnaireEvaluator {
           verdict: 'immediate_no',
           message: `Absolutely not. ${selectedOption.label} is a deal-breaker.`,
           isImmediate: true,
+          score: -Infinity, // Immediate disqualifiers have the worst possible score
         }
       }
     }
 
     return null
+  }
+
+  /**
+   * Calculate the total score from all answers
+   */
+  private calculateScore(answers: UserAnswers): number {
+    let totalScore = 0
+
+    for (const question of this.questions) {
+      const userAnswer = answers.get(question.id)
+      if (!userAnswer || userAnswer === '') continue
+
+      const selectedOption = question.options.find((opt) => opt.value === userAnswer)
+      if (selectedOption?.weight !== undefined) {
+        totalScore += selectedOption.weight
+      }
+    }
+
+    return totalScore
   }
 
   /**
@@ -66,11 +86,24 @@ export class QuestionnaireEvaluator {
   }
 
   /**
-   * Check if a rule applies to the given answers
+   * Check if a rule applies to the given answers and score
    */
-  private doesRuleApply(rule: EvaluationRule, answers: UserAnswers): boolean {
-    // All conditions must be met
-    return rule.conditions.every((condition) => this.isConditionMet(condition, answers))
+  private doesRuleApply(rule: EvaluationRule, answers: UserAnswers, score: number): boolean {
+    // Check weight-based thresholds
+    if (rule.minScore !== undefined && score < rule.minScore) {
+      return false
+    }
+    if (rule.maxScore !== undefined && score > rule.maxScore) {
+      return false
+    }
+
+    // Check condition-based rules (if any conditions are specified)
+    if (rule.conditions && rule.conditions.length > 0) {
+      return rule.conditions.every((condition) => this.isConditionMet(condition, answers))
+    }
+
+    // If no conditions and score is in range, rule applies
+    return true
   }
 
   /**
@@ -83,16 +116,20 @@ export class QuestionnaireEvaluator {
       return immediateResult
     }
 
+    // Calculate total score
+    const score = this.calculateScore(answers)
+
     // Sort rules by priority (highest first)
     const sortedRules = [...this.rules].sort((a, b) => b.priority - a.priority)
 
     // Find the first rule that applies
     for (const rule of sortedRules) {
-      if (this.doesRuleApply(rule, answers)) {
+      if (this.doesRuleApply(rule, answers, score)) {
         return {
           verdict: rule.verdict,
           message: rule.message,
           isImmediate: rule.verdict === 'immediate_no',
+          score,
         }
       }
     }
@@ -102,6 +139,7 @@ export class QuestionnaireEvaluator {
       verdict: 'conditional',
       message: 'Unable to determine compatibility. Please review your answers.',
       isImmediate: false,
+      score,
     }
   }
 

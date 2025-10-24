@@ -103,7 +103,8 @@ describe('QuestionnaireEvaluator', () => {
 
       expect(result.verdict).toBe('approved')
       expect(result.isImmediate).toBe(false)
-      expect(result.message).toContain('stand a chance')
+      expect(result.score).toBe(20) // Steelers (10) + No pineapple (5) + No ketchup (5) + Not Lutheran (0)
+      expect(result.message).toContain('Steelers fan')
     })
 
     it('should approve non-Steelers fan with good food takes', () => {
@@ -132,8 +133,10 @@ describe('QuestionnaireEvaluator', () => {
 
       const result = evaluator.evaluate(answers)
 
+      // Score: Packers (0) + No pineapple (5) + Yes ketchup (-8) + Lutheran (3) = 0
       expect(result.verdict).toBe('conditional')
-      expect(result.message).toContain('Ketchup')
+      expect(result.score).toBe(0)
+      expect(result.message).toContain('redeeming qualities')
     })
 
     it('should conditionally approve someone with neutral food opinions', () => {
