@@ -28,6 +28,7 @@ export interface EvaluationResult {
   message: string
   isImmediate: boolean
   score: number // Total calculated score
+  emoji?: string // Optional emoji to display with the result
 }
 
 export interface RuleCondition {
@@ -45,6 +46,7 @@ export interface EvaluationRule {
   conditions?: RuleCondition[]
   verdict: VerdictType
   message: string
+  emoji?: string // Optional emoji to display with this rule's result
   // Higher priority rules are evaluated first
   priority: number
   // Weight-based thresholds

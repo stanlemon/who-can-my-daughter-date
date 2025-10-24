@@ -138,6 +138,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
       verdict: 'approved',
       message:
         'Outstanding! As a Lutheran Steelers fan with impeccable food opinions, they have my highest approval!',
+      emoji: '💯',
       priority: 100,
     },
 
@@ -149,28 +150,36 @@ export const questionnaireConfig: QuestionnaireConfig = {
         { questionId: 'football_team', value: 'steelers' },
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
+        { questionId: 'lutheran', value: 'no' },
       ],
       verdict: 'approved',
       message:
-        'As a Steelers fan with impeccable food opinions, they have my strong approval!',
+        "As a Steelers fan with impeccable food opinions, they have my strong approval! We'll convert them before they join the family.",
+      emoji: '⭐',
       priority: 95,
     },
 
-    // Good Steelers fan - one acceptable food opinion
+    // Good food opinions, Lutheran but not a Steelers fan
     {
-      id: 'good-steelers',
-      description: 'Steelers fan with good taste',
-      conditions: [{ questionId: 'football_team', minScore: 40 }], // Must be Steelers (40 points)
-      minScore: 60, // And overall score 60+
-      verdict: 'approved',
-      message: 'As a Steelers fan with good taste, they stand a strong chance at approval.',
-      priority: 90,
+      id: 'good-food-opinions-lutheran',
+      description: 'Excellent food opinions compensate for team choice',
+      conditions: [
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+        { questionId: 'lutheran', value: 'yes' },
+      ],
+      minScore: 50, // 25+25 = 50
+      verdict: 'conditional',
+      message:
+        "They have excellent food opinions, which doesn't have to be redeeming, since they're keeping the faith. Their football team choice could be better.",
+      emoji: '🙏',
+      priority: 60,
     },
 
-    // Good food opinions, not a Steelers fan
+    // Good food opinions, not Lutheran and not a Steelers fan
     {
       id: 'good-food-opinions',
-      description: 'Excellent food opinions compensate for team choice',
+      description: 'Excellent food opinions, room for spiritual and team improvement',
       conditions: [
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
@@ -179,7 +188,8 @@ export const questionnaireConfig: QuestionnaireConfig = {
       verdict: 'conditional',
       message:
         'They have excellent food opinions, which is redeeming. The team choice could be better.',
-      priority: 60,
+      emoji: '👍',
+      priority: 55,
     },
 
     // Acceptable score - some redeeming qualities (30-59)
@@ -191,6 +201,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
       verdict: 'conditional',
       message:
         'They have some redeeming qualities, but need to make improvements to be a strong candidate.',
+      emoji: '🤔',
       priority: 50,
     },
 
@@ -203,6 +214,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
       verdict: 'conditional',
       message:
         'Significant concerns about their choices. Major improvements needed to be considered.',
+      emoji: '😬',
       priority: 45,
     },
 
@@ -214,6 +226,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
       verdict: 'rejected',
       message:
         'Their questionable life choices (especially regarding hot dog condiments) are concerning. Major changes needed.',
+      emoji: '🚫',
       priority: 40,
     },
 
@@ -223,6 +236,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
       description: 'Fallback rule',
       verdict: 'conditional',
       message: 'Evaluation complete. Review their answers carefully.',
+      emoji: '🤷',
       priority: 1,
     },
   ],

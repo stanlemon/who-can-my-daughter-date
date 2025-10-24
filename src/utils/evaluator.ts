@@ -172,6 +172,7 @@ export class QuestionnaireEvaluator {
           message: rule.message,
           isImmediate: rule.verdict === 'immediate_no',
           score,
+          emoji: rule.emoji,
         }
       }
     }

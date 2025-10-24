@@ -43,7 +43,10 @@ export function ResultSummary({ result }: ResultSummaryProps) {
       <div className="result-summary-content">
         <div className="result-summary-icon">{getIcon()}</div>
         <div className="result-summary-text">
-          <h3 className="result-summary-title">{getVerdictText()}</h3>
+          <h3 className="result-summary-title">
+            {result.emoji && <span className="result-summary-emoji">{result.emoji}</span>}
+            {getVerdictText()}
+          </h3>
           <p className="result-summary-message">{result.message}</p>
         </div>
       </div>
