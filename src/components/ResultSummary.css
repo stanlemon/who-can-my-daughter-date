@@ -1,0 +1,100 @@
+.result-summary {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.4s ease-out;
+  z-index: 100;
+}
+
+.result-summary-content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.result-summary-icon {
+  flex-shrink: 0;
+}
+
+.result-summary-text {
+  flex: 1;
+}
+
+.result-summary-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.result-summary-message {
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Approved - Green */
+.result-summary--approved {
+  background-color: #059669;
+  color: white;
+}
+
+.result-summary--approved .result-summary-icon {
+  color: #d1fae5;
+}
+
+/* Conditional - Yellow/Orange */
+.result-summary--conditional {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.result-summary--conditional .result-summary-icon {
+  color: #fef3c7;
+}
+
+/* Rejected - Red */
+.result-summary--rejected {
+  background-color: #dc2626;
+  color: white;
+}
+
+.result-summary--rejected .result-summary-icon {
+  color: #fecaca;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .result-summary-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .result-summary-title {
+    font-size: 1.25rem;
+  }
+
+  .result-summary-message {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result-summary {
+    animation: none;
+  }
+}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Heart } from 'lucide-react'
 import { Questionnaire } from './components/Questionnaire'
 import { DisqualifiedOverlay } from './components/DisqualifiedOverlay'
+import { ResultSummary } from './components/ResultSummary'
 import { QuestionnaireEvaluator } from './utils/evaluator'
 import { questionnaireConfig } from './config/questionnaire'
 import type { EvaluationResult } from './types/questions'
@@ -37,6 +38,8 @@ function App() {
           onEvaluation={handleEvaluation}
         />
       </main>
+
+      {result && !result.isImmediate && <ResultSummary result={result} />}
     </div>
   )
 }
