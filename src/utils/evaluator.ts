@@ -13,6 +13,21 @@ export class QuestionnaireEvaluator {
   ) {}
 
   /**
+   * Get a specific disqualification message based on the question and answer
+   */
+  private getDisqualificationMessage(questionId: string, answerLabel: string): string {
+    const messageMap: Record<string, string> = {
+      football_team: `Absolutely not. Being a ${answerLabel} fan is a fundamental character flaw and an immediate disqualifier.`,
+      pineapple_pizza: `Absolutely not. Anyone who thinks pineapple belongs on pizza has demonstrated a catastrophic lack of judgment. This is a deal-breaker.`,
+    }
+
+    return (
+      messageMap[questionId] ||
+      `Absolutely not. ${answerLabel} is a deal-breaker that cannot be overlooked.`
+    )
+  }
+
+  /**
    * Check if any answer is an immediate disqualifier
    */
   private checkImmediateDisqualifiers(answers: UserAnswers): EvaluationResult | null {
@@ -24,7 +39,7 @@ export class QuestionnaireEvaluator {
       if (selectedOption?.immediateDisqualifier) {
         return {
           verdict: 'immediate_no',
-          message: `Absolutely not. ${selectedOption.label} is a deal-breaker.`,
+          message: this.getDisqualificationMessage(question.id, selectedOption.label),
           isImmediate: true,
           score: -Infinity, // Immediate disqualifiers have the worst possible score
         }

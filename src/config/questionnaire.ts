@@ -1,26 +1,29 @@
 import type { QuestionnaireConfig } from '../types/questions'
 
 /*
- * Weight System:
- * - Steelers: +10 (best team)
+ * Weight System (out of 100 points):
+ * - Steelers: +40 (best team)
  * - Most teams: 0 (neutral)
  * - Browns/Ravens/Bengals: immediate disqualifier
  *
- * - Pineapple NO: +5 (good taste)
+ * - Pineapple NO: +25 (good taste)
  * - Pineapple neutral: 0
  * - Pineapple YES: immediate disqualifier
  *
- * - Ketchup NO: +5 (good taste)
+ * - Ketchup NO: +25 (good taste)
  * - Ketchup neutral: 0
- * - Ketchup YES: -8 (very bad)
+ * - Ketchup YES: -35 (very bad)
  *
- * - Lutheran YES: +3
+ * - Lutheran YES: +10
  * - Lutheran NO: 0
  *
+ * Perfect Score: 100 (Steelers + No pineapple + No ketchup + Lutheran)
+ *
  * Score ranges:
- * - 18-23: Excellent (Steelers + good food opinions + Lutheran)
- * - 10-17: Good/Approved
- * - 0-9: Conditional
+ * - 80-100: Excellent/Outstanding
+ * - 60-79: Good/Approved
+ * - 30-59: Conditional
+ * - 0-29: Needs major improvement
  * - Below 0: Rejected
  */
 
@@ -52,7 +55,7 @@ const NFL_TEAMS = [
   { value: 'giants', label: 'New York Giants', weight: 0 },
   { value: 'jets', label: 'New York Jets', weight: 0 },
   { value: 'eagles', label: 'Philadelphia Eagles', weight: 0 },
-  { value: 'steelers', label: 'Pittsburgh Steelers', weight: 10, tags: ['steelers'] },
+  { value: 'steelers', label: 'Pittsburgh Steelers', weight: 40, tags: ['steelers'] },
   { value: '49ers', label: 'San Francisco 49ers', weight: 0 },
   { value: 'seahawks', label: 'Seattle Seahawks', weight: 0 },
   { value: 'buccaneers', label: 'Tampa Bay Buccaneers', weight: 0 },
@@ -80,7 +83,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
           weight: -100,
           tags: ['pineapple-yes'],
         },
-        { value: 'no', label: 'No', weight: 5, tags: ['pineapple-no'] },
+        { value: 'no', label: 'No', weight: 25, tags: ['pineapple-no'] },
         {
           value: 'can-live-without',
           label: 'I can live with never having it again',
@@ -94,8 +97,8 @@ export const questionnaireConfig: QuestionnaireConfig = {
       text: 'Ketchup belongs on a hot dog',
       type: 'radio',
       options: [
-        { value: 'yes', label: 'Yes', weight: -8, tags: ['ketchup-yes'] },
-        { value: 'no', label: 'No', weight: 5, tags: ['ketchup-no'] },
+        { value: 'yes', label: 'Yes', weight: -35, tags: ['ketchup-yes'] },
+        { value: 'no', label: 'No', weight: 25, tags: ['ketchup-no'] },
         {
           value: 'can-live-without',
           label: 'I can live with never having it again',
@@ -109,54 +112,66 @@ export const questionnaireConfig: QuestionnaireConfig = {
       text: 'Are they Lutheran?',
       type: 'radio',
       options: [
-        { value: 'yes', label: 'Yes', weight: 3, tags: ['lutheran'] },
+        { value: 'yes', label: 'Yes', weight: 10, tags: ['lutheran'] },
         { value: 'no', label: 'No', weight: 0, tags: ['not-lutheran'] },
       ],
     },
   ],
 
   scoreThresholds: {
-    excellent: 18, // Steelers (10) + No pineapple (5) + No ketchup (5) + Lutheran (3) = 23
-    good: 10, // Steelers (10) + good food opinions
-    acceptable: 0, // Neutral answers
+    excellent: 80, // Steelers (40) + No pineapple (25) + No ketchup (25) + Lutheran (10) = 100
+    good: 60, // Strong approval threshold
+    acceptable: 30, // Conditional approval threshold
   },
 
   rules: [
-    // Excellent score - perfect candidate
+    // Excellent score - perfect or near-perfect candidate (80-100)
     {
       id: 'excellent-score',
       description: 'Excellent score - perfect match',
-      minScore: 18,
+      minScore: 80,
       verdict: 'approved',
       message:
         'Outstanding! As a Lutheran Steelers fan with impeccable food opinions, they have my highest approval!',
       priority: 100,
     },
 
-    // Good score - strong approval
+    // Good score - strong approval (60-79)
     {
       id: 'good-score',
       description: 'Good score - approved',
-      minScore: 10,
+      minScore: 60,
       verdict: 'approved',
       message:
         'As a Steelers fan with good taste in food, they stand a strong chance at approval.',
       priority: 90,
     },
 
-    // Acceptable score - conditional approval
+    // Acceptable score - conditional approval (30-59)
     {
       id: 'acceptable-score',
       description: 'Acceptable score but room for improvement',
-      minScore: 0,
-      maxScore: 9,
+      minScore: 30,
+      maxScore: 59,
       verdict: 'conditional',
       message:
         'They have some redeeming qualities, but need to make improvements to be a strong candidate.',
       priority: 50,
     },
 
-    // Negative score - rejected
+    // Low positive score - needs major improvement (0-29)
+    {
+      id: 'low-score',
+      description: 'Low score - needs improvement',
+      minScore: 0,
+      maxScore: 29,
+      verdict: 'conditional',
+      message:
+        'Significant concerns about their choices. Major improvements needed to be considered.',
+      priority: 45,
+    },
+
+    // Negative score - rejected (below 0)
     {
       id: 'negative-score',
       description: 'Below acceptable threshold',

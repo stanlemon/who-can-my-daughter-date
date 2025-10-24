@@ -27,6 +27,7 @@ describe('QuestionnaireEvaluator', () => {
       expect(result.verdict).toBe('immediate_no')
       expect(result.isImmediate).toBe(true)
       expect(result.message).toContain('Cleveland Browns')
+      expect(result.message).toContain('fundamental character flaw')
     })
 
     it('should reject people who like pineapple on pizza', () => {
@@ -41,7 +42,8 @@ describe('QuestionnaireEvaluator', () => {
 
       expect(result.verdict).toBe('immediate_no')
       expect(result.isImmediate).toBe(true)
-      expect(result.message).toContain('Yes')
+      expect(result.message).toContain('pineapple')
+      expect(result.message).toContain('catastrophic lack of judgment')
     })
   })
 
@@ -103,7 +105,7 @@ describe('QuestionnaireEvaluator', () => {
 
       expect(result.verdict).toBe('approved')
       expect(result.isImmediate).toBe(false)
-      expect(result.score).toBe(20) // Steelers (10) + No pineapple (5) + No ketchup (5) + Not Lutheran (0)
+      expect(result.score).toBe(90) // Steelers (40) + No pineapple (25) + No ketchup (25) + Not Lutheran (0)
       expect(result.message).toContain('Steelers fan')
     })
 
@@ -117,8 +119,10 @@ describe('QuestionnaireEvaluator', () => {
 
       const result = evaluator.evaluate(answers)
 
-      expect(result.verdict).toBe('approved')
+      // Packers (0) + No pineapple (25) + No ketchup (25) = 50
+      expect(result.verdict).toBe('conditional')
       expect(result.isImmediate).toBe(false)
+      expect(result.score).toBe(50)
     })
   })
 
@@ -133,10 +137,10 @@ describe('QuestionnaireEvaluator', () => {
 
       const result = evaluator.evaluate(answers)
 
-      // Score: Packers (0) + No pineapple (5) + Yes ketchup (-8) + Lutheran (3) = 0
+      // Score: Packers (0) + No pineapple (25) + Yes ketchup (-35) + Lutheran (10) = 0
       expect(result.verdict).toBe('conditional')
       expect(result.score).toBe(0)
-      expect(result.message).toContain('redeeming qualities')
+      expect(result.message).toContain('Significant concerns')
     })
 
     it('should conditionally approve someone with neutral food opinions', () => {
