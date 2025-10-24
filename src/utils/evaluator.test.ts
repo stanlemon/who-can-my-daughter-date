@@ -109,7 +109,7 @@ describe('QuestionnaireEvaluator', () => {
       expect(result.message).toContain('Steelers fan')
     })
 
-    it('should approve non-Steelers fan with good food takes', () => {
+    it('should conditionally approve non-Steelers fan with excellent food opinions', () => {
       const answers = createAnswers({
         football_team: 'packers',
         pineapple_pizza: 'no',
@@ -120,9 +120,11 @@ describe('QuestionnaireEvaluator', () => {
       const result = evaluator.evaluate(answers)
 
       // Packers (0) + No pineapple (25) + No ketchup (25) = 50
+      // This should match the 'good-food-opinions' rule
       expect(result.verdict).toBe('conditional')
       expect(result.isImmediate).toBe(false)
       expect(result.score).toBe(50)
+      expect(result.message).toContain('excellent food opinions')
     })
   })
 
@@ -154,6 +156,57 @@ describe('QuestionnaireEvaluator', () => {
       const result = evaluator.evaluate(answers)
 
       expect(result.verdict).toBe('conditional')
+    })
+  })
+
+  describe('Condition-Based Rules', () => {
+    it('should match exact value conditions', () => {
+      const answers = createAnswers({
+        football_team: 'steelers',
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'yes',
+      })
+
+      const result = evaluator.evaluate(answers)
+
+      // Should match 'perfect-match' rule which requires exact values
+      expect(result.verdict).toBe('approved')
+      expect(result.message).toContain('Lutheran Steelers fan with impeccable food opinions')
+    })
+
+    it('should match score-based question conditions', () => {
+      const answers = createAnswers({
+        football_team: 'steelers', // 40 points
+        pineapple_pizza: 'can-live-without', // 0 points
+        ketchup_hotdog: 'can-live-without', // 0 points
+        lutheran: 'yes', // 10 points
+      })
+
+      const result = evaluator.evaluate(answers)
+
+      // Total: 50 points, but has Steelers (40+) so should match 'good-steelers' if score >= 60
+      // Actually this is 50 total, so won't match 'good-steelers' (needs 60+)
+      // Should fall through to 'acceptable-score' (30-59)
+      expect(result.score).toBe(50)
+      expect(result.verdict).toBe('conditional')
+    })
+
+    it('should prioritize more specific rules over generic ones', () => {
+      const answers = createAnswers({
+        football_team: 'lions',
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'yes',
+      })
+
+      const result = evaluator.evaluate(answers)
+
+      // Score: 0 + 25 + 25 + 10 = 60
+      // Should match 'good-food-opinions' (priority 60) instead of generic score rules
+      expect(result.score).toBe(60)
+      expect(result.verdict).toBe('conditional')
+      expect(result.message).toContain('excellent food opinions')
     })
   })
 

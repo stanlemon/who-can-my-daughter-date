@@ -32,8 +32,10 @@ export interface EvaluationResult {
 
 export interface RuleCondition {
   questionId: string
-  value?: string // Match specific value
+  value?: string // Match specific value (exact match)
   hasTag?: string // Or match by tag
+  minScore?: number // Or match if this question's answer has score >= minScore
+  maxScore?: number // Or match if this question's answer has score <= maxScore
 }
 
 export interface EvaluationRule {

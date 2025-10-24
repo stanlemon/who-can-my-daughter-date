@@ -80,6 +80,17 @@ export class QuestionnaireEvaluator {
   }
 
   /**
+   * Get the score for a specific question's answer
+   */
+  private getQuestionScore(questionId: string, answerValue: string): number {
+    const question = this.questions.find((q) => q.id === questionId)
+    if (!question) return 0
+
+    const option = question.options.find((opt) => opt.value === answerValue)
+    return option?.weight ?? 0
+  }
+
+  /**
    * Check if a condition is met
    */
   private isConditionMet(condition: RuleCondition, answers: UserAnswers): boolean {
@@ -87,14 +98,30 @@ export class QuestionnaireEvaluator {
     if (!userAnswer) return false
 
     // Check for specific value match
-    if (condition.value) {
+    if (condition.value !== undefined) {
       return userAnswer === condition.value
     }
 
     // Check for tag match
-    if (condition.hasTag) {
+    if (condition.hasTag !== undefined) {
       const tags = this.getAnswerTags(condition.questionId, userAnswer)
       return tags.includes(condition.hasTag)
+    }
+
+    // Check for score-based match on this specific question
+    const questionScore = this.getQuestionScore(condition.questionId, userAnswer)
+
+    if (condition.minScore !== undefined && questionScore < condition.minScore) {
+      return false
+    }
+
+    if (condition.maxScore !== undefined && questionScore > condition.maxScore) {
+      return false
+    }
+
+    // If we have minScore or maxScore defined, and we passed the checks, condition is met
+    if (condition.minScore !== undefined || condition.maxScore !== undefined) {
+      return true
     }
 
     return false

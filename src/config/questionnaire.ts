@@ -125,29 +125,64 @@ export const questionnaireConfig: QuestionnaireConfig = {
   },
 
   rules: [
-    // Excellent score - perfect or near-perfect candidate (80-100)
+    // Perfect match - Lutheran Steelers fan with excellent food opinions (100 points)
     {
-      id: 'excellent-score',
-      description: 'Excellent score - perfect match',
-      minScore: 80,
+      id: 'perfect-match',
+      description: 'Perfect Lutheran Steelers fan',
+      conditions: [
+        { questionId: 'football_team', value: 'steelers' },
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+        { questionId: 'lutheran', value: 'yes' },
+      ],
       verdict: 'approved',
       message:
         'Outstanding! As a Lutheran Steelers fan with impeccable food opinions, they have my highest approval!',
       priority: 100,
     },
 
-    // Good score - strong approval (60-79)
+    // Excellent Steelers fan - not Lutheran but great otherwise (90 points)
     {
-      id: 'good-score',
-      description: 'Good score - approved',
-      minScore: 60,
+      id: 'excellent-steelers',
+      description: 'Steelers fan with excellent food opinions',
+      conditions: [
+        { questionId: 'football_team', value: 'steelers' },
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+      ],
       verdict: 'approved',
       message:
-        'As a Steelers fan with good taste in food, they stand a strong chance at approval.',
+        'As a Steelers fan with impeccable food opinions, they have my strong approval!',
+      priority: 95,
+    },
+
+    // Good Steelers fan - one acceptable food opinion
+    {
+      id: 'good-steelers',
+      description: 'Steelers fan with good taste',
+      conditions: [{ questionId: 'football_team', minScore: 40 }], // Must be Steelers (40 points)
+      minScore: 60, // And overall score 60+
+      verdict: 'approved',
+      message: 'As a Steelers fan with good taste, they stand a strong chance at approval.',
       priority: 90,
     },
 
-    // Acceptable score - conditional approval (30-59)
+    // Good food opinions, not a Steelers fan
+    {
+      id: 'good-food-opinions',
+      description: 'Excellent food opinions compensate for team choice',
+      conditions: [
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+      ],
+      minScore: 50, // 25+25 = 50
+      verdict: 'conditional',
+      message:
+        'They have excellent food opinions, which is redeeming. The team choice could be better.',
+      priority: 60,
+    },
+
+    // Acceptable score - some redeeming qualities (30-59)
     {
       id: 'acceptable-score',
       description: 'Acceptable score but room for improvement',
