@@ -16,17 +16,22 @@ const evaluator = new QuestionnaireEvaluator(
 function App() {
   const [result, setResult] = useState<EvaluationResult | null>(null)
   const [showOverlay, setShowOverlay] = useState(true)
+  const [lastDismissedMessage, setLastDismissedMessage] = useState<string | null>(null)
 
   const handleEvaluation = (evalResult: EvaluationResult | null) => {
     setResult(evalResult)
-    // Show overlay again when a new immediate disqualifier is triggered
-    if (evalResult?.isImmediate) {
+    // Show overlay again only if it's a NEW immediate disqualifier (different message)
+    if (evalResult?.isImmediate && evalResult.message !== lastDismissedMessage) {
       setShowOverlay(true)
     }
   }
 
   const handleDismissOverlay = () => {
     setShowOverlay(false)
+    // Remember this message so we don't show it again
+    if (result?.message) {
+      setLastDismissedMessage(result.message)
+    }
   }
 
   return (
