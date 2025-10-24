@@ -1,6 +1,18 @@
 # Who Can My Daughter Date?
 
-A modern web application built with React, TypeScript, and Vite.
+A humorous questionnaire application that evaluates dating compatibility based on important life choices like sports team allegiance, pizza toppings, and condiment preferences. Built with React 19, TypeScript, and Vite.
+
+## Features
+
+- 🏈 NFL team preference evaluation (Browns fans need not apply)
+- 🍕 Pineapple pizza opinion assessment
+- 🌭 Hot dog ketchup stance verification
+- ⛪ Lutheran affiliation inquiry
+- ⚡ Immediate disqualification for deal-breakers
+- 🎨 Color-coded verdict system (green/yellow/red)
+- 🌙 Dark mode support
+- ♿ Fully accessible with ARIA labels
+- 📱 Responsive design for all devices
 
 ## Prerequisites
 
@@ -123,29 +135,52 @@ GitHub Actions workflow is configured to:
 
 The workflow runs on every push to `main` and on pull requests.
 
+## How It Works
+
+The application uses a config-driven questionnaire evaluation system:
+
+1. **Questions** are defined in `src/config/questionnaire.ts` with answer options
+2. **Immediate Disqualifiers** are marked on specific answers (e.g., Cleveland Browns)
+3. **Rules** evaluate answer combinations with priority ordering
+4. **Verdicts** are determined by matching rules:
+   - **Immediate No**: Big red X overlay (e.g., Browns fans, pineapple enthusiasts)
+   - **Rejected**: Red summary banner (e.g., multiple bad takes)
+   - **Conditional**: Yellow banner (e.g., questionable but not disqualifying)
+   - **Approved**: Green banner (e.g., Steelers fan with good food opinions)
+
 ## Project Structure
 
 ```
 .
 ├── .github/
 │   └── workflows/
-│       └── ci.yml          # GitHub Actions CI workflow
-├── public/                 # Static assets
+│       └── ci.yml                    # GitHub Actions CI workflow
+├── public/                           # Static assets
 ├── src/
+│   ├── components/                   # React components
+│   │   ├── Question.tsx             # Individual question component
+│   │   ├── Questionnaire.tsx        # Question list manager
+│   │   ├── DisqualifiedOverlay.tsx  # Red X overlay for hard nos
+│   │   └── ResultSummary.tsx        # Verdict summary banner
+│   ├── config/
+│   │   └── questionnaire.ts         # Questions and rules configuration
+│   ├── types/
+│   │   └── questions.ts             # TypeScript type definitions
+│   ├── utils/
+│   │   └── evaluator.ts             # Evaluation engine
 │   ├── test/
-│   │   └── setup.ts       # Test setup and configuration
-│   ├── App.tsx            # Main App component
-│   ├── App.css            # App component styles
-│   ├── App.test.tsx       # App component tests
-│   ├── main.tsx           # Application entry point
-│   └── index.css          # Global styles
-├── .nvmrc                 # Node version specification
-├── eslint.config.js       # ESLint configuration
-├── .prettierrc            # Prettier configuration
-├── tsconfig.json          # TypeScript configuration
-├── vite.config.ts         # Vite and Vitest configuration
-├── wrangler.toml          # Cloudflare Pages configuration
-└── package.json           # Project dependencies and scripts
+│   │   └── setup.ts                 # Test setup and configuration
+│   ├── App.tsx                      # Main App component
+│   ├── main.tsx                     # Application entry point
+│   └── index.css                    # Global styles
+├── .nvmrc                           # Node version specification
+├── CLAUDE.md                        # Project instructions for Claude Code
+├── eslint.config.js                 # ESLint configuration
+├── .prettierrc                      # Prettier configuration
+├── tsconfig.json                    # TypeScript configuration
+├── vite.config.ts                   # Vite and Vitest configuration
+├── wrangler.toml                    # Cloudflare Pages configuration
+└── package.json                     # Project dependencies and scripts
 ```
 
 ## Code Quality
