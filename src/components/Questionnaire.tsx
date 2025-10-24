@@ -23,6 +23,17 @@ export function Questionnaire({ questions, evaluator, onEvaluation }: Questionna
 
   // Evaluate whenever answers change
   useEffect(() => {
+    // Always check for immediate disqualifiers first, even if incomplete
+    if (answers.size > 0) {
+      const result = evaluator.evaluate(answers)
+      // Show immediate disqualifiers right away
+      if (result.isImmediate) {
+        onEvaluation(result)
+        return
+      }
+    }
+
+    // For non-immediate results, only evaluate when complete
     if (evaluator.isComplete(answers)) {
       const result = evaluator.evaluate(answers)
       onEvaluation(result)

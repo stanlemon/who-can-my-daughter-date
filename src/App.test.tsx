@@ -23,7 +23,7 @@ describe('App', () => {
   it('renders the questionnaire', () => {
     render(<App />)
     // Check for one of the questions
-    expect(screen.getByText('They root for ___ in football')).toBeInTheDocument()
+    expect(screen.getByText('Their football team is')).toBeInTheDocument()
     expect(screen.getByText('Pineapple belongs on pizza')).toBeInTheDocument()
   })
 

@@ -4,11 +4,11 @@ const NFL_TEAMS = [
   { value: '', label: 'Select a team...' },
   { value: 'cardinals', label: 'Arizona Cardinals' },
   { value: 'falcons', label: 'Atlanta Falcons' },
-  { value: 'ravens', label: 'Baltimore Ravens' },
+  { value: 'ravens', label: 'Baltimore Ravens', immediateDisqualifier: true },
   { value: 'bills', label: 'Buffalo Bills' },
   { value: 'panthers', label: 'Carolina Panthers' },
   { value: 'bears', label: 'Chicago Bears' },
-  { value: 'bengals', label: 'Cincinnati Bengals' },
+  { value: 'bengals', label: 'Cincinnati Bengals', immediateDisqualifier: true },
   { value: 'browns', label: 'Cleveland Browns', immediateDisqualifier: true },
   { value: 'cowboys', label: 'Dallas Cowboys' },
   { value: 'broncos', label: 'Denver Broncos' },
@@ -40,7 +40,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
   questions: [
     {
       id: 'football_team',
-      text: 'They root for ___ in football',
+      text: 'Their football team is',
       type: 'select',
       options: NFL_TEAMS,
     },
