@@ -159,21 +159,21 @@ export const questionnaireConfig: QuestionnaireConfig = {
       priority: 95,
     },
 
-    // Good food opinions, Lutheran but not a Steelers fan
+    // Perfect food opinions and Lutheran, just need to convert to Steelers
     {
-      id: 'good-food-opinions-lutheran',
-      description: 'Excellent food opinions compensate for team choice',
+      id: 'lutheran-perfect-food',
+      description: 'Lutheran with impeccable food opinions - Steelers conversion needed',
       conditions: [
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'yes' },
       ],
-      minScore: 50, // 25+25 = 50
-      verdict: 'conditional',
+      minScore: 60, // 25+25+10 = 60 (food + Lutheran, any non-disqualifying team)
+      verdict: 'approved',
       message:
-        "They have excellent food opinions, which doesn't have to be redeeming, since they're keeping the faith. Their football team choice could be better.",
-      emoji: '🙏',
-      priority: 60,
+        "As a Lutheran with impeccable food opinions, they can join the family! We'll work on converting them to Steelers fans.",
+      emoji: '✝️',
+      priority: 85,
     },
 
     // Good food opinions, not Lutheran and not a Steelers fan

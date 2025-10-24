@@ -192,7 +192,7 @@ describe('QuestionnaireEvaluator', () => {
       expect(result.verdict).toBe('conditional')
     })
 
-    it('should prioritize more specific rules over generic ones', () => {
+    it('should approve Lutheran with perfect food opinions (non-Steelers team)', () => {
       const answers = createAnswers({
         football_team: 'lions',
         pineapple_pizza: 'no',
@@ -203,10 +203,11 @@ describe('QuestionnaireEvaluator', () => {
       const result = evaluator.evaluate(answers)
 
       // Score: 0 + 25 + 25 + 10 = 60
-      // Should match 'good-food-opinions' (priority 60) instead of generic score rules
+      // Should match 'lutheran-perfect-food' rule (priority 85)
       expect(result.score).toBe(60)
-      expect(result.verdict).toBe('conditional')
-      expect(result.message).toContain('excellent food opinions')
+      expect(result.verdict).toBe('approved')
+      expect(result.message).toContain('Lutheran with impeccable food opinions')
+      expect(result.message).toContain('converting them to Steelers fans')
     })
   })
 
