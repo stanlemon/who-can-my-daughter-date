@@ -10,6 +10,13 @@
   color: #213547;
 }
 
+.question-emoji {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .question-select {
   width: 100%;
   max-width: 400px;

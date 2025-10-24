@@ -24,7 +24,7 @@ describe('App', () => {
     render(<App />)
     // Check for one of the questions
     expect(screen.getByText('Their football team is')).toBeInTheDocument()
-    expect(screen.getByText('Pineapple belongs on pizza')).toBeInTheDocument()
+    expect(screen.getByText('They think pineapple belongs on pizza')).toBeInTheDocument()
   })
 
   it('renders main content area', () => {

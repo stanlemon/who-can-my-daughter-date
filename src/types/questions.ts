@@ -17,6 +17,7 @@ export interface Question {
   text: string
   type: QuestionType
   options: AnswerOption[]
+  emoji?: string // Optional emoji to display with the question
 }
 
 export type UserAnswers = Map<string, string>

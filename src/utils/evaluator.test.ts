@@ -119,17 +119,16 @@ describe('QuestionnaireEvaluator', () => {
 
       const result = evaluator.evaluate(answers)
 
-      // Packers (0) + No pineapple (25) + No ketchup (25) = 50
-      // This should match the 'good-food-opinions' rule
+      // Packers (-10) + No pineapple (25) + No ketchup (25) = 40
+      // This should match the 'acceptable-score' rule (30-59)
       expect(result.verdict).toBe('conditional')
       expect(result.isImmediate).toBe(false)
-      expect(result.score).toBe(50)
-      expect(result.message).toContain('excellent food opinions')
+      expect(result.score).toBe(40)
     })
   })
 
   describe('Conditional Approvals', () => {
-    it('should conditionally approve someone who likes ketchup on hot dogs', () => {
+    it('should reject someone who likes ketchup on hot dogs with Packers', () => {
       const answers = createAnswers({
         football_team: 'packers',
         pineapple_pizza: 'no',
@@ -139,10 +138,10 @@ describe('QuestionnaireEvaluator', () => {
 
       const result = evaluator.evaluate(answers)
 
-      // Score: Packers (0) + No pineapple (25) + Yes ketchup (-35) + Lutheran (10) = 0
-      expect(result.verdict).toBe('conditional')
-      expect(result.score).toBe(0)
-      expect(result.message).toContain('Significant concerns')
+      // Score: Packers (-10) + No pineapple (25) + Yes ketchup (-35) + Lutheran (10) = -10
+      // This now falls into negative-score (rejected) due to Packers penalty
+      expect(result.verdict).toBe('rejected')
+      expect(result.score).toBe(-10)
     })
 
     it('should conditionally approve someone with neutral food opinions', () => {
@@ -202,9 +201,9 @@ describe('QuestionnaireEvaluator', () => {
 
       const result = evaluator.evaluate(answers)
 
-      // Score: 0 + 25 + 25 + 10 = 60
-      // Should match 'lutheran-perfect-food' rule (priority 85)
-      expect(result.score).toBe(60)
+      // Score: Lions (30) + No pineapple (25) + No ketchup (25) + Lutheran (10) = 90
+      // Hits 'lutheran-perfect-food' rule (priority 85)
+      expect(result.score).toBe(90)
       expect(result.verdict).toBe('approved')
       expect(result.message).toContain('Lutheran with impeccable food opinions')
       expect(result.message).toContain('converting them to Steelers fans')

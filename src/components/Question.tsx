@@ -16,6 +16,7 @@ export function Question({ question, value, onChange }: QuestionProps) {
     return (
       <div className="question">
         <label htmlFor={question.id} className="question-label">
+          {question.emoji && <span className="question-emoji">{question.emoji}</span>}
           {question.text}
         </label>
         <select
@@ -38,7 +39,10 @@ export function Question({ question, value, onChange }: QuestionProps) {
   return (
     <div className="question">
       <fieldset className="question-fieldset">
-        <legend className="question-label">{question.text}</legend>
+        <legend className="question-label">
+          {question.emoji && <span className="question-emoji">{question.emoji}</span>}
+          {question.text}
+        </legend>
         <div className="question-options">
           {question.options.map((option) => (
             <label key={option.value} className="radio-label">
