@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { Heart } from 'lucide-react'
 import { Questionnaire } from './components/Questionnaire'
 import { DisqualifiedOverlay } from './components/DisqualifiedOverlay'
@@ -16,23 +16,23 @@ const evaluator = new QuestionnaireEvaluator(
 function App() {
   const [result, setResult] = useState<EvaluationResult | null>(null)
   const [showOverlay, setShowOverlay] = useState(true)
-  const [lastDismissedMessage, setLastDismissedMessage] = useState<string | null>(null)
+  const lastDismissedMessageRef = useRef<string | null>(null)
 
-  const handleEvaluation = (evalResult: EvaluationResult | null) => {
+  const handleEvaluation = useCallback((evalResult: EvaluationResult | null) => {
     setResult(evalResult)
     // Show overlay again only if it's a NEW immediate disqualifier (different message)
-    if (evalResult?.isImmediate && evalResult.message !== lastDismissedMessage) {
+    if (evalResult?.isImmediate && evalResult.message !== lastDismissedMessageRef.current) {
       setShowOverlay(true)
     }
-  }
+  }, [])
 
-  const handleDismissOverlay = () => {
+  const handleDismissOverlay = useCallback(() => {
     setShowOverlay(false)
     // Remember this message so we don't show it again
     if (result?.message) {
-      setLastDismissedMessage(result.message)
+      lastDismissedMessageRef.current = result.message
     }
-  }
+  }, [result])
 
   return (
     <div className="app">
