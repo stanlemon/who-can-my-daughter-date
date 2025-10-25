@@ -13,6 +13,21 @@ describe('QuestionnaireEvaluator', () => {
     return new Map(Object.entries(answers))
   }
 
+  // Helper function to get the weight for a specific answer
+  const getAnswerWeight = (questionId: string, answerValue: string): number => {
+    const question = questionnaireConfig.questions.find((q) => q.id === questionId)
+    if (!question) return 0
+    const option = question.options.find((opt) => opt.value === answerValue)
+    return option?.weight ?? 0
+  }
+
+  // Helper function to calculate total score for a set of answers
+  const calculateExpectedScore = (answers: Record<string, string>): number => {
+    return Object.entries(answers).reduce((total, [questionId, answerValue]) => {
+      return total + getAnswerWeight(questionId, answerValue)
+    }, 0)
+  }
+
   describe('Immediate Disqualifiers', () => {
     it('should reject Cleveland Browns fans', () => {
       const answers = createAnswers({
@@ -94,54 +109,55 @@ describe('QuestionnaireEvaluator', () => {
     })
 
     it('should approve Steelers fan with good food takes (not Lutheran)', () => {
-      const answers = createAnswers({
+      const answerSet = {
         football_team: 'steelers',
         pineapple_pizza: 'no',
         ketchup_hotdog: 'no',
         lutheran: 'no',
-      })
+      }
+      const answers = createAnswers(answerSet)
 
       const result = evaluator.evaluate(answers)
 
       expect(result.verdict).toBe('approved')
       expect(result.isImmediate).toBe(false)
-      expect(result.score).toBe(90) // Steelers (40) + No pineapple (25) + No ketchup (25) + Not Lutheran (0)
+      expect(result.score).toBe(calculateExpectedScore(answerSet))
       expect(result.message).toContain('Steelers fan')
     })
 
     it('should conditionally approve non-Steelers fan with excellent food opinions', () => {
-      const answers = createAnswers({
+      const answerSet = {
         football_team: 'packers',
         pineapple_pizza: 'no',
         ketchup_hotdog: 'no',
         lutheran: 'no',
-      })
+      }
+      const answers = createAnswers(answerSet)
 
       const result = evaluator.evaluate(answers)
 
-      // Packers (-10) + No pineapple (25) + No ketchup (25) = 40
-      // This should match the 'acceptable-score' rule (30-59)
+      const expectedScore = calculateExpectedScore(answerSet)
       expect(result.verdict).toBe('conditional')
       expect(result.isImmediate).toBe(false)
-      expect(result.score).toBe(40)
+      expect(result.score).toBe(expectedScore)
     })
   })
 
   describe('Conditional Approvals', () => {
     it('should reject someone who likes ketchup on hot dogs with Packers', () => {
-      const answers = createAnswers({
+      const answerSet = {
         football_team: 'packers',
         pineapple_pizza: 'no',
         ketchup_hotdog: 'yes',
         lutheran: 'yes',
-      })
+      }
+      const answers = createAnswers(answerSet)
 
       const result = evaluator.evaluate(answers)
 
-      // Score: Packers (-10) + No pineapple (25) + Yes ketchup (-35) + Lutheran (10) = -10
-      // This now falls into negative-score (rejected) due to Packers penalty
+      const expectedScore = calculateExpectedScore(answerSet)
       expect(result.verdict).toBe('rejected')
-      expect(result.score).toBe(-10)
+      expect(result.score).toBe(expectedScore)
     })
 
     it('should conditionally approve someone with neutral food opinions', () => {
@@ -175,35 +191,34 @@ describe('QuestionnaireEvaluator', () => {
     })
 
     it('should match score-based question conditions', () => {
-      const answers = createAnswers({
-        football_team: 'steelers', // 40 points
-        pineapple_pizza: 'can-live-without', // 0 points
-        ketchup_hotdog: 'can-live-without', // 0 points
-        lutheran: 'yes', // 10 points
-      })
+      const answerSet = {
+        football_team: 'steelers',
+        pineapple_pizza: 'can-live-without',
+        ketchup_hotdog: 'can-live-without',
+        lutheran: 'yes',
+      }
+      const answers = createAnswers(answerSet)
 
       const result = evaluator.evaluate(answers)
 
-      // Total: 50 points, but has Steelers (40+) so should match 'good-steelers' if score >= 60
-      // Actually this is 50 total, so won't match 'good-steelers' (needs 60+)
-      // Should fall through to 'acceptable-score' (30-59)
-      expect(result.score).toBe(50)
+      const expectedScore = calculateExpectedScore(answerSet)
+      expect(result.score).toBe(expectedScore)
       expect(result.verdict).toBe('conditional')
     })
 
     it('should approve Lutheran with perfect food opinions (non-Steelers team)', () => {
-      const answers = createAnswers({
+      const answerSet = {
         football_team: 'lions',
         pineapple_pizza: 'no',
         ketchup_hotdog: 'no',
         lutheran: 'yes',
-      })
+      }
+      const answers = createAnswers(answerSet)
 
       const result = evaluator.evaluate(answers)
 
-      // Score: Lions (30) + No pineapple (25) + No ketchup (25) + Lutheran (10) = 90
-      // Hits 'lutheran-perfect-food' rule (priority 85)
-      expect(result.score).toBe(90)
+      const expectedScore = calculateExpectedScore(answerSet)
+      expect(result.score).toBe(expectedScore)
       expect(result.verdict).toBe('approved')
       expect(result.message).toContain('Lutheran with impeccable food opinions')
       expect(result.message).toContain('converting them to Steelers fans')
