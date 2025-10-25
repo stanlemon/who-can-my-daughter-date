@@ -1,4 +1,4 @@
-import type { QuestionnaireConfig } from '../types/questions'
+import type { QuestionnaireConfig, AnswerOption } from '../types/questions'
 
 /*
  * Weight System (out of 100 points):
@@ -27,10 +27,10 @@ import type { QuestionnaireConfig } from '../types/questions'
  * - Below 0: Rejected
  */
 
-const NFL_TEAMS = [
-  { value: '', label: 'Select a team...', weight: 0 },
-  { value: 'cardinals', label: 'Arizona Cardinals', weight: 0 },
-  { value: 'falcons', label: 'Atlanta Falcons', weight: 0 },
+const NFL_TEAMS: AnswerOption[] = [
+  { value: '', label: 'Select a team...', weight: 0, color: 'orange' },
+  { value: 'cardinals', label: 'Arizona Cardinals', weight: 0, color: 'orange' },
+  { value: 'falcons', label: 'Atlanta Falcons', weight: 0, color: 'orange' },
   {
     value: 'ravens',
     label: 'Baltimore Ravens',
@@ -38,9 +38,9 @@ const NFL_TEAMS = [
     weight: -100,
     color: 'red',
   },
-  { value: 'bills', label: 'Buffalo Bills', weight: 0 },
-  { value: 'panthers', label: 'Carolina Panthers', weight: 0 },
-  { value: 'bears', label: 'Chicago Bears', weight: 0 },
+  { value: 'bills', label: 'Buffalo Bills', weight: 5, color: 'yellow' },
+  { value: 'panthers', label: 'Carolina Panthers', weight: 0, color: 'orange' },
+  { value: 'bears', label: 'Chicago Bears', weight: 0, color: 'orange' },
   {
     value: 'bengals',
     label: 'Cincinnati Bengals',
@@ -55,24 +55,24 @@ const NFL_TEAMS = [
     weight: -100,
     color: 'red',
   },
-  { value: 'cowboys', label: 'Dallas Cowboys', weight: -60 },
-  { value: 'broncos', label: 'Denver Broncos', weight: 0 },
-  { value: 'lions', label: 'Detroit Lions', weight: 30, color: 'green' },
-  { value: 'packers', label: 'Green Bay Packers', weight: -10 },
-  { value: 'texans', label: 'Houston Texans', weight: 0 },
+  { value: 'cowboys', label: 'Dallas Cowboys', weight: -60, color: 'orange' },
+  { value: 'broncos', label: 'Denver Broncos', weight: 0, color: 'orange' },
+  { value: 'lions', label: 'Detroit Lions', weight: 30, color: 'yellow' },
+  { value: 'packers', label: 'Green Bay Packers', weight: -10, color: 'orange' },
+  { value: 'texans', label: 'Houston Texans', weight: 0, color: 'orange' },
   { value: 'colts', label: 'Indianapolis Colts', weight: 10, color: 'yellow' },
-  { value: 'jaguars', label: 'Jacksonville Jaguars', weight: 0 },
-  { value: 'chiefs', label: 'Kansas City Chiefs', weight: 0 },
-  { value: 'raiders', label: 'Las Vegas Raiders', weight: -50 },
-  { value: 'chargers', label: 'Los Angeles Chargers', weight: 0 },
-  { value: 'rams', label: 'Los Angeles Rams', weight: 0 },
-  { value: 'dolphins', label: 'Miami Dolphins', weight: 0 },
-  { value: 'vikings', label: 'Minnesota Vikings', weight: 0 },
-  { value: 'patriots', label: 'New England Patriots', weight: 0 },
-  { value: 'saints', label: 'New Orleans Saints', weight: 0 },
-  { value: 'giants', label: 'New York Giants', weight: 0 },
-  { value: 'jets', label: 'New York Jets', weight: 0 },
-  { value: 'eagles', label: 'Philadelphia Eagles', weight: 0 },
+  { value: 'jaguars', label: 'Jacksonville Jaguars', weight: 0, color: 'orange' },
+  { value: 'chiefs', label: 'Kansas City Chiefs', weight: 0, color: 'orange' },
+  { value: 'raiders', label: 'Las Vegas Raiders', weight: -50, color: 'orange' },
+  { value: 'chargers', label: 'Los Angeles Chargers', weight: 0, color: 'orange' },
+  { value: 'rams', label: 'Los Angeles Rams', weight: 0, color: 'orange' },
+  { value: 'dolphins', label: 'Miami Dolphins', weight: 0, color: 'orange' },
+  { value: 'vikings', label: 'Minnesota Vikings', weight: 0, color: 'orange' },
+  { value: 'patriots', label: 'New England Patriots', weight: 0, color: 'orange' },
+  { value: 'saints', label: 'New Orleans Saints', weight: 0, color: 'orange' },
+  { value: 'giants', label: 'New York Giants', weight: 0, color: 'orange' },
+  { value: 'jets', label: 'New York Jets', weight: 0, color: 'orange' },
+  { value: 'eagles', label: 'Philadelphia Eagles', weight: 0, color: 'orange' },
   {
     value: 'steelers',
     label: 'Pittsburgh Steelers',
@@ -80,11 +80,11 @@ const NFL_TEAMS = [
     tags: ['steelers'],
     color: 'green',
   },
-  { value: '49ers', label: 'San Francisco 49ers', weight: 0 },
-  { value: 'seahawks', label: 'Seattle Seahawks', weight: 0 },
-  { value: 'buccaneers', label: 'Tampa Bay Buccaneers', weight: 0 },
-  { value: 'titans', label: 'Tennessee Titans', weight: 0 },
-  { value: 'commanders', label: 'Washington Commanders', weight: 0 },
+  { value: '49ers', label: 'San Francisco 49ers', weight: 0, color: 'orange' },
+  { value: 'seahawks', label: 'Seattle Seahawks', weight: 0, color: 'orange' },
+  { value: 'buccaneers', label: 'Tampa Bay Buccaneers', weight: 0, color: 'orange' },
+  { value: 'titans', label: 'Tennessee Titans', weight: 0, color: 'orange' },
+  { value: 'commanders', label: 'Washington Commanders', weight: 0, color: 'orange' },
 ]
 
 export const questionnaireConfig: QuestionnaireConfig = {
@@ -159,7 +159,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
           tags: ['lotr-superfan'],
           color: 'green',
         },
-        { value: 'yes', label: 'Yes', weight: 30, tags: ['lotr-read'], color: 'green' },
+        { value: 'yes', label: 'Yes', weight: 30, tags: ['lotr-read'], color: 'yellow' },
         {
           value: 'movie-directors-cut',
           label: "No, but I saw the director's cut movie",

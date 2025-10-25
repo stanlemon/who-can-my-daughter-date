@@ -257,4 +257,250 @@ describe('QuestionnaireEvaluator', () => {
       expect(evaluator.isComplete(answers)).toBe(true)
     })
   })
+
+  describe('Tag-Based Conditions', () => {
+    it('should match rules using hasTag condition', () => {
+      // Create a custom rule that uses hasTag
+      const customRules = [
+        {
+          id: 'steelers-tag-test',
+          description: 'Test tag-based matching',
+          conditions: [{ questionId: 'football_team', hasTag: 'steelers' }],
+          verdict: 'approved' as const,
+          message: 'Found Steelers via tag!',
+          priority: 100,
+        },
+        ...questionnaireConfig.rules,
+      ]
+
+      const customEvaluator = new QuestionnaireEvaluator(
+        questionnaireConfig.questions,
+        customRules
+      )
+
+      const answers = createAnswers({
+        football_team: 'steelers',
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'no',
+        lotr: 'no',
+      })
+
+      const result = customEvaluator.evaluate(answers)
+
+      expect(result.verdict).toBe('approved')
+      expect(result.message).toBe('Found Steelers via tag!')
+    })
+
+    it('should not match when tag is not present', () => {
+      const customRules = [
+        {
+          id: 'steelers-tag-test',
+          description: 'Test tag-based matching',
+          conditions: [{ questionId: 'football_team', hasTag: 'steelers' }],
+          verdict: 'approved' as const,
+          message: 'Found Steelers via tag!',
+          priority: 100,
+        },
+        {
+          id: 'fallback',
+          description: 'Fallback',
+          verdict: 'conditional' as const,
+          message: 'No Steelers tag found',
+          priority: 1,
+        },
+      ]
+
+      const customEvaluator = new QuestionnaireEvaluator(
+        questionnaireConfig.questions,
+        customRules
+      )
+
+      const answers = createAnswers({
+        football_team: 'cowboys',
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'no',
+        lotr: 'no',
+      })
+
+      const result = customEvaluator.evaluate(answers)
+
+      expect(result.verdict).toBe('conditional')
+      expect(result.message).toBe('No Steelers tag found')
+    })
+  })
+
+  describe('MaxScore Conditions', () => {
+    it('should match rules using maxScore on question conditions', () => {
+      const customRules = [
+        {
+          id: 'low-team-score',
+          description: 'Test maxScore matching',
+          conditions: [{ questionId: 'football_team', maxScore: 0 }],
+          verdict: 'conditional' as const,
+          message: 'Team score is 0 or less',
+          priority: 100,
+        },
+        {
+          id: 'fallback',
+          description: 'Fallback',
+          verdict: 'approved' as const,
+          message: 'Team score is positive',
+          priority: 1,
+        },
+      ]
+
+      const customEvaluator = new QuestionnaireEvaluator(
+        questionnaireConfig.questions,
+        customRules
+      )
+
+      const answers = createAnswers({
+        football_team: 'packers', // -10 points
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'no',
+        lotr: 'no',
+      })
+
+      const result = customEvaluator.evaluate(answers)
+
+      expect(result.verdict).toBe('conditional')
+      expect(result.message).toBe('Team score is 0 or less')
+    })
+
+    it('should not match when score exceeds maxScore', () => {
+      const customRules = [
+        {
+          id: 'low-team-score',
+          description: 'Test maxScore matching',
+          conditions: [{ questionId: 'football_team', maxScore: 0 }],
+          verdict: 'conditional' as const,
+          message: 'Team score is 0 or less',
+          priority: 100,
+        },
+        {
+          id: 'fallback',
+          description: 'Fallback',
+          verdict: 'approved' as const,
+          message: 'Team score is positive',
+          priority: 1,
+        },
+      ]
+
+      const customEvaluator = new QuestionnaireEvaluator(
+        questionnaireConfig.questions,
+        customRules
+      )
+
+      const answers = createAnswers({
+        football_team: 'steelers', // 40 points
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'no',
+        lotr: 'no',
+      })
+
+      const result = customEvaluator.evaluate(answers)
+
+      expect(result.verdict).toBe('approved')
+      expect(result.message).toBe('Team score is positive')
+    })
+
+    it('should match rules with both minScore and maxScore range', () => {
+      const customRules = [
+        {
+          id: 'score-range',
+          description: 'Test minScore and maxScore together',
+          conditions: [{ questionId: 'football_team', minScore: 5, maxScore: 20 }],
+          verdict: 'approved' as const,
+          message: 'Team score in acceptable range',
+          priority: 100,
+        },
+        {
+          id: 'fallback',
+          description: 'Fallback',
+          verdict: 'conditional' as const,
+          message: 'Team score out of range',
+          priority: 1,
+        },
+      ]
+
+      const customEvaluator = new QuestionnaireEvaluator(
+        questionnaireConfig.questions,
+        customRules
+      )
+
+      const answers = createAnswers({
+        football_team: 'colts', // 10 points
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'no',
+        lotr: 'no',
+      })
+
+      const result = customEvaluator.evaluate(answers)
+
+      expect(result.verdict).toBe('approved')
+      expect(result.message).toBe('Team score in acceptable range')
+    })
+  })
+
+  describe('Edge Cases', () => {
+    it('should handle missing question in getQuestionScore', () => {
+      const customRules = [
+        {
+          id: 'missing-question',
+          description: 'Test missing question',
+          conditions: [{ questionId: 'nonexistent', value: 'test' }],
+          verdict: 'approved' as const,
+          message: 'Should not match',
+          priority: 100,
+        },
+        {
+          id: 'fallback',
+          description: 'Fallback',
+          verdict: 'conditional' as const,
+          message: 'Fallback matched',
+          priority: 1,
+        },
+      ]
+
+      const customEvaluator = new QuestionnaireEvaluator(
+        questionnaireConfig.questions,
+        customRules
+      )
+
+      const answers = createAnswers({
+        football_team: 'steelers',
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'no',
+        lotr: 'no',
+      })
+
+      const result = customEvaluator.evaluate(answers)
+
+      expect(result.verdict).toBe('conditional')
+      expect(result.message).toBe('Fallback matched')
+    })
+
+    it('should use fallback evaluation when no rules match', () => {
+      const customEvaluator = new QuestionnaireEvaluator(questionnaireConfig.questions, [])
+
+      const answers = createAnswers({
+        football_team: 'steelers',
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'no',
+        lotr: 'no',
+      })
+
+      const result = customEvaluator.evaluate(answers)
+
+      expect(result.verdict).toBe('conditional')
+      expect(result.message).toContain('Unable to determine compatibility')
+    })
+  })
 })
