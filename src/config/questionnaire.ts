@@ -17,7 +17,18 @@ import type { QuestionnaireConfig, AnswerOption } from '../types/questions'
  * - Lutheran YES: +10
  * - Lutheran NO: 0
  *
- * Perfect Score: 100 (Steelers + No pineapple + No ketchup + Lutheran)
+ * - Nice to siblings YES: +5 (expected behavior)
+ * - Nice to siblings NO: -40 (major red flag)
+ *
+ * - LOTR superfan: +35
+ * - LOTR reader: +30
+ * - LOTR movie: +10
+ * - LOTR Sauron: -5
+ * - LOTR no: -10
+ * - LOTR unaware: -15
+ *
+ * Perfect Score: 140 (Steelers + No pineapple + No ketchup + Lutheran + Nice to siblings + LOTR superfan)
+ * = 40 + 25 + 25 + 10 + 5 + 35
  *
  * Score ranges:
  * - 80-100: Excellent/Outstanding
@@ -149,6 +160,28 @@ export const questionnaireConfig: QuestionnaireConfig = {
       emoji: '⛪',
     },
     {
+      id: 'nice_to_siblings',
+      text: 'They are nice to my siblings',
+      type: 'radio',
+      options: [
+        {
+          value: 'yes',
+          label: 'Yes',
+          weight: 5,
+          tags: ['nice-to-siblings'],
+          color: 'green',
+        },
+        {
+          value: 'no',
+          label: 'No',
+          weight: -40,
+          tags: ['mean-to-siblings'],
+          color: 'red',
+        },
+      ],
+      emoji: '👨‍👩‍👧‍👦',
+    },
+    {
       id: 'lotr',
       text: 'They have read Lord of the Rings',
       type: 'radio',
@@ -186,165 +219,186 @@ export const questionnaireConfig: QuestionnaireConfig = {
     excellent: 80, // Strong approval threshold
     good: 60, // Good approval threshold
     acceptable: 50, // Conditional approval threshold
-    // Perfect score: Steelers (40) + No pineapple (25) + No ketchup (25) + Lutheran (10) + LOTR superfan (15) = 115
+    // Perfect score: Steelers (40) + No pineapple (25) + No ketchup (25) + Lutheran (10) + Nice to siblings (5) + LOTR superfan (35) = 140
   },
 
   rules: [
-    // Perfect match - Lutheran Steelers fan with excellent food opinions + LOTR superfan
+    // Perfect match - Lutheran Steelers fan with excellent food opinions + LOTR superfan + nice to siblings
     {
       id: 'perfect-match-lotr-superfan',
-      description: 'Perfect Lutheran Steelers fan + LOTR superfan',
+      description: 'Perfect Lutheran Steelers fan + LOTR superfan + nice to siblings',
       conditions: [
         { questionId: 'football_team', value: 'steelers' },
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'nice_to_siblings', value: 'yes' },
         { questionId: 'lotr', value: 'yes-second-breakfast' },
       ],
       verdict: 'approved',
       message:
-        'Absolutely outstanding! A Lutheran Steelers fan with impeccable food opinions AND a true scholar of Middle-earth. My highest approval!',
+        'Absolutely outstanding! A Lutheran Steelers fan with impeccable food opinions, kind to your siblings, AND a true scholar of Middle-earth. My highest approval!',
       emoji: '💯',
       priority: 101,
     },
 
-    // Perfect match - Lutheran Steelers fan with excellent food opinions + LOTR reader
+    // Perfect match - Lutheran Steelers fan with excellent food opinions + LOTR reader + nice to siblings
     {
       id: 'perfect-match-lotr-reader',
-      description: 'Perfect Lutheran Steelers fan + LOTR reader',
+      description: 'Perfect Lutheran Steelers fan + LOTR reader + nice to siblings',
       conditions: [
         { questionId: 'football_team', value: 'steelers' },
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'nice_to_siblings', value: 'yes' },
         { questionId: 'lotr', value: 'yes' },
       ],
       verdict: 'approved',
       message:
-        'Outstanding! A Lutheran Steelers fan with impeccable food opinions and excellent literary taste. They have my highest approval!',
+        'Outstanding! A Lutheran Steelers fan with impeccable food opinions, kind to your siblings, and excellent literary taste. They have my highest approval!',
       emoji: '💯',
       priority: 100.5,
     },
 
-    // Perfect match - Lutheran Steelers fan with excellent food opinions (100 points)
+    // Perfect match - Lutheran Steelers fan with excellent food opinions + nice to siblings
     {
       id: 'perfect-match',
-      description: 'Perfect Lutheran Steelers fan',
+      description: 'Perfect Lutheran Steelers fan + nice to siblings',
       conditions: [
         { questionId: 'football_team', value: 'steelers' },
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'nice_to_siblings', value: 'yes' },
       ],
       verdict: 'approved',
       message:
-        'Outstanding! As a Lutheran Steelers fan with impeccable food opinions, they have my highest approval!',
+        'Outstanding! As a Lutheran Steelers fan with impeccable food opinions and kindness to your siblings, they have my highest approval!',
       emoji: '💯',
       priority: 100,
     },
 
-    // Excellent Steelers fan + LOTR superfan
+    // Not nice to siblings - major red flag
+    {
+      id: 'mean-to-siblings',
+      description: 'Not nice to siblings - unacceptable behavior',
+      conditions: [{ questionId: 'nice_to_siblings', value: 'no' }],
+      verdict: 'rejected',
+      message:
+        'Being unkind to your siblings is a major red flag. This shows a fundamental lack of respect and consideration for family. Absolutely unacceptable.',
+      emoji: '🚩',
+      priority: 98,
+    },
+
+    // Excellent Steelers fan + LOTR superfan + nice to siblings
     {
       id: 'excellent-steelers-lotr-superfan',
-      description: 'Steelers fan with excellent food opinions + LOTR superfan',
+      description: 'Steelers fan with excellent food opinions + LOTR superfan + nice to siblings',
       conditions: [
         { questionId: 'football_team', value: 'steelers' },
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'no' },
+        { questionId: 'nice_to_siblings', value: 'yes' },
         { questionId: 'lotr', value: 'yes-second-breakfast' },
       ],
       verdict: 'approved',
       message:
-        "A Steelers fan with impeccable food opinions and a true scholar of Middle-earth! My strong approval! We'll convert them to Lutheranism before they join the family.",
+        "A Steelers fan with impeccable food opinions, kind to your siblings, and a true scholar of Middle-earth! My strong approval! We'll convert them to Lutheranism before they join the family.",
       emoji: '⭐',
       priority: 96,
     },
 
-    // Excellent Steelers fan + LOTR reader
+    // Excellent Steelers fan + LOTR reader + nice to siblings
     {
       id: 'excellent-steelers-lotr-reader',
-      description: 'Steelers fan with excellent food opinions + LOTR reader',
+      description: 'Steelers fan with excellent food opinions + LOTR reader + nice to siblings',
       conditions: [
         { questionId: 'football_team', value: 'steelers' },
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'no' },
+        { questionId: 'nice_to_siblings', value: 'yes' },
         { questionId: 'lotr', value: 'yes' },
       ],
       verdict: 'approved',
       message:
-        "A Steelers fan with impeccable food opinions and excellent literary taste! My strong approval! We'll convert them before they join the family.",
+        "A Steelers fan with impeccable food opinions, kind to your siblings, and excellent literary taste! My strong approval! We'll convert them before they join the family.",
       emoji: '⭐',
       priority: 95.5,
     },
 
-    // Excellent Steelers fan - not Lutheran but great otherwise (90 points)
+    // Excellent Steelers fan - not Lutheran but great otherwise + nice to siblings
     {
       id: 'excellent-steelers',
-      description: 'Steelers fan with excellent food opinions',
+      description: 'Steelers fan with excellent food opinions + nice to siblings',
       conditions: [
         { questionId: 'football_team', value: 'steelers' },
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'no' },
+        { questionId: 'nice_to_siblings', value: 'yes' },
       ],
       verdict: 'approved',
       message:
-        "As a Steelers fan with impeccable food opinions, they have my strong approval! We'll convert them before they join the family.",
+        "As a Steelers fan with impeccable food opinions and kindness to your siblings, they have my strong approval! We'll convert them before they join the family.",
       emoji: '⭐',
       priority: 95,
     },
 
-    // Lutheran + perfect food + LOTR superfan
+    // Lutheran + perfect food + LOTR superfan + nice to siblings
     {
       id: 'lutheran-perfect-food-lotr-superfan',
-      description: 'Lutheran with impeccable food opinions + LOTR superfan',
+      description: 'Lutheran with impeccable food opinions + LOTR superfan + nice to siblings',
       conditions: [
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'nice_to_siblings', value: 'yes' },
         { questionId: 'lotr', value: 'yes-second-breakfast' },
       ],
       minScore: 60,
       verdict: 'approved',
       message:
-        "A Lutheran with impeccable food opinions and a true scholar of Middle-earth! They can join the family! We'll work on converting them to Steelers fans.",
+        "A Lutheran with impeccable food opinions, kind to your siblings, and a true scholar of Middle-earth! They can join the family! We'll work on converting them to Steelers fans.",
       emoji: '✝️',
       priority: 86,
     },
 
-    // Lutheran + perfect food + LOTR reader
+    // Lutheran + perfect food + LOTR reader + nice to siblings
     {
       id: 'lutheran-perfect-food-lotr-reader',
-      description: 'Lutheran with impeccable food opinions + LOTR reader',
+      description: 'Lutheran with impeccable food opinions + LOTR reader + nice to siblings',
       conditions: [
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'nice_to_siblings', value: 'yes' },
         { questionId: 'lotr', value: 'yes' },
       ],
       minScore: 60,
       verdict: 'approved',
       message:
-        "A Lutheran with impeccable food opinions and excellent literary taste! They can join the family! We'll work on converting them to Steelers fans.",
+        "A Lutheran with impeccable food opinions, kind to your siblings, and excellent literary taste! They can join the family! We'll work on converting them to Steelers fans.",
       emoji: '✝️',
       priority: 85.5,
     },
 
-    // Perfect food opinions and Lutheran, just need to convert to Steelers
+    // Perfect food opinions and Lutheran + nice to siblings, just need to convert to Steelers
     {
       id: 'lutheran-perfect-food',
-      description: 'Lutheran with impeccable food opinions - Steelers conversion needed',
+      description: 'Lutheran with impeccable food opinions + nice to siblings',
       conditions: [
         { questionId: 'pineapple_pizza', value: 'no' },
         { questionId: 'ketchup_hotdog', value: 'no' },
         { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'nice_to_siblings', value: 'yes' },
       ],
-      minScore: 60, // 25+25+10 = 60 (food + Lutheran, any non-disqualifying team)
+      minScore: 60, // 25+25+10+5 = 65 (food + Lutheran + nice, any non-disqualifying team)
       verdict: 'approved',
       message:
-        "As a Lutheran with impeccable food opinions, they can join the family! We'll work on converting them to Steelers fans.",
+        "As a Lutheran with impeccable food opinions and kindness to your siblings, they can join the family! We'll work on converting them to Steelers fans.",
       emoji: '✝️',
       priority: 85,
     },

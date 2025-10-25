@@ -99,6 +99,7 @@ describe('QuestionnaireEvaluator', () => {
         pineapple_pizza: 'no',
         ketchup_hotdog: 'no',
         lutheran: 'yes',
+        nice_to_siblings: 'yes',
       })
 
       const result = evaluator.evaluate(answers)
@@ -114,6 +115,7 @@ describe('QuestionnaireEvaluator', () => {
         pineapple_pizza: 'no',
         ketchup_hotdog: 'no',
         lutheran: 'no',
+        nice_to_siblings: 'yes',
       }
       const answers = createAnswers(answerSet)
 
@@ -144,6 +146,24 @@ describe('QuestionnaireEvaluator', () => {
   })
 
   describe('Conditional Approvals', () => {
+    it('should reject someone who is not nice to siblings', () => {
+      const answerSet = {
+        football_team: 'steelers',
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'yes',
+        nice_to_siblings: 'no',
+        lotr: 'yes',
+      }
+      const answers = createAnswers(answerSet)
+
+      const result = evaluator.evaluate(answers)
+
+      expect(result.verdict).toBe('rejected')
+      expect(result.message).toContain('unkind to your siblings')
+      expect(result.message).toContain('major red flag')
+    })
+
     it('should reject someone who likes ketchup on hot dogs with Packers', () => {
       const answerSet = {
         football_team: 'packers',
@@ -201,6 +221,7 @@ describe('QuestionnaireEvaluator', () => {
         pineapple_pizza: 'no',
         ketchup_hotdog: 'no',
         lutheran: 'yes',
+        nice_to_siblings: 'yes',
       })
 
       const result = evaluator.evaluate(answers)
@@ -232,6 +253,7 @@ describe('QuestionnaireEvaluator', () => {
         pineapple_pizza: 'no',
         ketchup_hotdog: 'no',
         lutheran: 'yes',
+        nice_to_siblings: 'yes',
       }
       const answers = createAnswers(answerSet)
 
@@ -271,6 +293,7 @@ describe('QuestionnaireEvaluator', () => {
         pineapple_pizza: 'no',
         ketchup_hotdog: 'no',
         lutheran: 'yes',
+        nice_to_siblings: 'yes',
         lotr: 'yes-second-breakfast',
       })
 
