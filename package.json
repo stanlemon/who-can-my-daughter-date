@@ -1,8 +1,25 @@
 {
   "name": "who-can-my-daughter-date",
-  "private": true,
   "version": "1.0.0",
   "type": "module",
+  "description": "A humorous questionnaire application that evaluates dating compatibility based on important life choices",
+  "author": "Stan Lemon <86314+stanlemon@users.noreply.github.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stanlemon/who-can-my-daughter-date.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stanlemon/who-can-my-daughter-date/issues"
+  },
+  "homepage": "https://github.com/stanlemon/who-can-my-daughter-date#readme",
+  "keywords": [
+    "react",
+    "typescript",
+    "vite",
+    "questionnaire",
+    "dating-app"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

@@ -199,3 +199,17 @@ The project is configured with:
 - Use `npm run format` to format code
 - Ensure `npm run type-check` passes
 - Follow React best practices and hooks guidelines
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on how to get started.
+
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+## Security
+
+For security concerns, please see our [Security Policy](SECURITY.md).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
