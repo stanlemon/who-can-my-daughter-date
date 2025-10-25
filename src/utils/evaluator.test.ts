@@ -172,6 +172,26 @@ describe('QuestionnaireEvaluator', () => {
 
       expect(result.verdict).toBe('conditional')
     })
+
+    it('should handle "I don\'t watch football" option with -25 score', () => {
+      const answerSet = {
+        football_team: 'no-football',
+        pineapple_pizza: 'no',
+        ketchup_hotdog: 'no',
+        lutheran: 'yes',
+        lotr: 'yes',
+      }
+      const answers = createAnswers(answerSet)
+
+      const result = evaluator.evaluate(answers)
+
+      const expectedScore = calculateExpectedScore(answerSet)
+      // Expected: -25 (no-football) + 25 (pineapple no) + 25 (ketchup no) + 10 (lutheran yes) + 30 (lotr yes) = 65
+      expect(result.score).toBe(expectedScore)
+      expect(result.score).toBe(65)
+      // With score of 65, should be approved (good threshold is 60)
+      expect(result.verdict).toBe('approved')
+    })
   })
 
   describe('Condition-Based Rules', () => {
