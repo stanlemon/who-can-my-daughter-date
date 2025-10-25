@@ -99,7 +99,7 @@ export const questionnaireConfig: QuestionnaireConfig = {
       text: 'They think ketchup belongs on a hot dog',
       type: 'radio',
       options: [
-        { value: 'yes', label: 'Yes', weight: -35, tags: ['ketchup-yes'] },
+        { value: 'yes', label: 'Yes', weight: -45, tags: ['ketchup-yes'] },
         { value: 'no', label: 'No', weight: 25, tags: ['ketchup-no'] },
         {
           value: 'can-live-without',
