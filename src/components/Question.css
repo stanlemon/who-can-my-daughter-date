@@ -19,24 +19,31 @@
 
 .question-select {
   width: 100%;
-  max-width: 400px;
+  max-width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
   border: 2px solid #e0e0e0;
   border-radius: 6px;
   background-color: white;
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+  padding-right: 2.5rem;
 }
 
 .question-select:hover {
   border-color: #646cff;
+  background-color: #f9f9ff;
 }
 
 .question-select:focus {
   outline: none;
   border-color: #646cff;
-  box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
+  background-color: #f0f0ff;
 }
 
 .question-fieldset {
@@ -73,54 +80,35 @@
   background-color: #f0f0ff;
 }
 
-/* Color-coded answer states - always visible */
-.radio-label--green {
+/* Color-coded answer states - only when checked */
+.radio-label--green.radio-label--checked {
   border-color: #059669;
   background-color: #d1fae5;
   color: #065f46;
 }
 
-.radio-label--red {
+.radio-label--red.radio-label--checked {
   border-color: #dc2626;
   background-color: #fee2e2;
   color: #991b1b;
 }
 
-.radio-label--yellow {
+.radio-label--yellow.radio-label--checked {
   border-color: #d97706;
   background-color: #fef3c7;
   color: #92400e;
 }
 
-.radio-label--orange {
+.radio-label--orange.radio-label--checked {
   border-color: #ea580c;
   background-color: #fed7aa;
   color: #9a3412;
 }
 
-.radio-label--default {
-  /* Keep the default styling */
-}
-
-/* Enhance color when checked */
-.radio-label--green.radio-label--checked {
-  background-color: #a7f3d0;
-  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
-}
-
-.radio-label--red.radio-label--checked {
-  background-color: #fecaca;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
-}
-
-.radio-label--yellow.radio-label--checked {
-  background-color: #fde68a;
-  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
-}
-
-.radio-label--orange.radio-label--checked {
-  background-color: #fdba74;
-  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
+.radio-label--default.radio-label--checked {
+  /* Keep the default checked state */
+  border-color: #646cff;
+  background-color: #f0f0ff;
 }
 
 .radio-input {
@@ -138,11 +126,17 @@
     background-color: #1a1a1a;
     border-color: #444;
     color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
   }
 
-  .question-select:hover,
+  .question-select:hover {
+    border-color: #646cff;
+    background-color: #2a2a3a;
+  }
+
   .question-select:focus {
     border-color: #646cff;
+    background-color: #2a2a4a;
   }
 
   .radio-label {
@@ -160,49 +154,33 @@
     background-color: #2a2a4a;
   }
 
-  /* Dark mode color overrides */
-  .radio-label--green {
+  /* Dark mode color overrides - only when checked */
+  .radio-label--green.radio-label--checked {
     border-color: #10b981;
     background-color: #064e3b;
     color: #d1fae5;
   }
 
-  .radio-label--red {
+  .radio-label--red.radio-label--checked {
     border-color: #ef4444;
     background-color: #7f1d1d;
     color: #fecaca;
   }
 
-  .radio-label--yellow {
+  .radio-label--yellow.radio-label--checked {
     border-color: #fbbf24;
     background-color: #78350f;
     color: #fef3c7;
   }
 
-  .radio-label--orange {
+  .radio-label--orange.radio-label--checked {
     border-color: #fb923c;
     background-color: #7c2d12;
     color: #fed7aa;
   }
 
-  /* Enhance dark mode checked states */
-  .radio-label--green.radio-label--checked {
-    background-color: #047857;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
-  }
-
-  .radio-label--red.radio-label--checked {
-    background-color: #991b1b;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
-  }
-
-  .radio-label--yellow.radio-label--checked {
-    background-color: #92400e;
-    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3);
-  }
-
-  .radio-label--orange.radio-label--checked {
-    background-color: #9a3412;
-    box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.3);
+  .radio-label--default.radio-label--checked {
+    border-color: #646cff;
+    background-color: #2a2a4a;
   }
 }
