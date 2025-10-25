@@ -44,19 +44,28 @@ export function Question({ question, value, onChange }: QuestionProps) {
           {question.text}
         </legend>
         <div className="question-options">
-          {question.options.map((option) => (
-            <label key={option.value} className="radio-label">
-              <input
-                type="radio"
-                name={question.id}
-                value={option.value}
-                checked={value === option.value}
-                onChange={(e) => handleChange(e.target.value)}
-                className="radio-input"
-              />
-              <span>{option.label}</span>
-            </label>
-          ))}
+          {question.options.map((option) => {
+            const isChecked = value === option.value
+            const colorClass = isChecked && option.color ? `radio-label--${option.color}` : ''
+
+            return (
+              <label
+                key={option.value}
+                className={`radio-label ${colorClass}`.trim()}
+                data-color={option.color}
+              >
+                <input
+                  type="radio"
+                  name={question.id}
+                  value={option.value}
+                  checked={isChecked}
+                  onChange={(e) => handleChange(e.target.value)}
+                  className="radio-input"
+                />
+                <span>{option.label}</span>
+              </label>
+            )
+          })}
         </div>
       </fieldset>
     </div>

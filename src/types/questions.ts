@@ -1,5 +1,7 @@
 export type QuestionType = 'select' | 'radio'
 
+export type AnswerColor = 'green' | 'red' | 'yellow' | 'default'
+
 export interface AnswerOption {
   value: string
   label: string
@@ -10,6 +12,8 @@ export interface AnswerOption {
   weight?: number
   // Tags for use in combination rules (kept for compatibility/additional logic)
   tags?: string[]
+  // Optional color for visual feedback when selected
+  color?: AnswerColor
 }
 
 export interface Question {

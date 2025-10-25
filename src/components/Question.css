@@ -73,6 +73,29 @@
   background-color: #f0f0ff;
 }
 
+/* Color-coded answer states when selected */
+.radio-label--green {
+  border-color: #059669;
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.radio-label--red {
+  border-color: #dc2626;
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.radio-label--yellow {
+  border-color: #f59e0b;
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.radio-label--default {
+  /* Keep the default checked state */
+}
+
 .radio-input {
   cursor: pointer;
   width: 18px;
@@ -108,5 +131,24 @@
 
   .radio-label:has(.radio-input:checked) {
     background-color: #2a2a4a;
+  }
+
+  /* Dark mode color overrides */
+  .radio-label--green {
+    border-color: #10b981;
+    background-color: #064e3b;
+    color: #d1fae5;
+  }
+
+  .radio-label--red {
+    border-color: #ef4444;
+    background-color: #7f1d1d;
+    color: #fecaca;
+  }
+
+  .radio-label--yellow {
+    border-color: #fbbf24;
+    background-color: #78350f;
+    color: #fef3c7;
   }
 }
