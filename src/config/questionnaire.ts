@@ -85,6 +85,7 @@ const NFL_TEAMS: AnswerOption[] = [
   { value: 'buccaneers', label: 'Tampa Bay Buccaneers', weight: 0, color: 'orange' },
   { value: 'titans', label: 'Tennessee Titans', weight: 0, color: 'orange' },
   { value: 'commanders', label: 'Washington Commanders', weight: 0, color: 'orange' },
+  { value: 'no-football', label: "I don't watch football", weight: -25, color: 'red' },
 ]
 
 export const questionnaireConfig: QuestionnaireConfig = {
