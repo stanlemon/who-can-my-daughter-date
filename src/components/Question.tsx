@@ -13,6 +13,9 @@ export function Question({ question, value, onChange }: QuestionProps) {
   }
 
   if (question.type === 'select') {
+    const selectedOption = question.options.find((opt) => opt.value === value)
+    const colorClass = selectedOption?.color ? `select--${selectedOption.color}` : ''
+
     return (
       <div className="question">
         <label htmlFor={question.id} className="question-label">
@@ -23,7 +26,7 @@ export function Question({ question, value, onChange }: QuestionProps) {
           id={question.id}
           value={value}
           onChange={(e) => handleChange(e.target.value)}
-          className="question-select"
+          className={`question-select ${colorClass}`.trim()}
         >
           {question.options.map((option) => (
             <option key={option.value} value={option.value}>
