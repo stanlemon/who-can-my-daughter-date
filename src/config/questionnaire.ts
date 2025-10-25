@@ -165,6 +165,42 @@ export const questionnaireConfig: QuestionnaireConfig = {
   },
 
   rules: [
+    // Perfect match - Lutheran Steelers fan with excellent food opinions + LOTR superfan
+    {
+      id: 'perfect-match-lotr-superfan',
+      description: 'Perfect Lutheran Steelers fan + LOTR superfan',
+      conditions: [
+        { questionId: 'football_team', value: 'steelers' },
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+        { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'lotr', value: 'yes-second-breakfast' },
+      ],
+      verdict: 'approved',
+      message:
+        'Absolutely outstanding! A Lutheran Steelers fan with impeccable food opinions AND a true scholar of Middle-earth. My highest approval!',
+      emoji: '💯',
+      priority: 101,
+    },
+
+    // Perfect match - Lutheran Steelers fan with excellent food opinions + LOTR reader
+    {
+      id: 'perfect-match-lotr-reader',
+      description: 'Perfect Lutheran Steelers fan + LOTR reader',
+      conditions: [
+        { questionId: 'football_team', value: 'steelers' },
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+        { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'lotr', value: 'yes' },
+      ],
+      verdict: 'approved',
+      message:
+        'Outstanding! A Lutheran Steelers fan with impeccable food opinions and excellent literary taste. They have my highest approval!',
+      emoji: '💯',
+      priority: 100.5,
+    },
+
     // Perfect match - Lutheran Steelers fan with excellent food opinions (100 points)
     {
       id: 'perfect-match',
@@ -180,6 +216,42 @@ export const questionnaireConfig: QuestionnaireConfig = {
         'Outstanding! As a Lutheran Steelers fan with impeccable food opinions, they have my highest approval!',
       emoji: '💯',
       priority: 100,
+    },
+
+    // Excellent Steelers fan + LOTR superfan
+    {
+      id: 'excellent-steelers-lotr-superfan',
+      description: 'Steelers fan with excellent food opinions + LOTR superfan',
+      conditions: [
+        { questionId: 'football_team', value: 'steelers' },
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+        { questionId: 'lutheran', value: 'no' },
+        { questionId: 'lotr', value: 'yes-second-breakfast' },
+      ],
+      verdict: 'approved',
+      message:
+        "A Steelers fan with impeccable food opinions and a true scholar of Middle-earth! My strong approval! We'll convert them to Lutheranism before they join the family.",
+      emoji: '⭐',
+      priority: 96,
+    },
+
+    // Excellent Steelers fan + LOTR reader
+    {
+      id: 'excellent-steelers-lotr-reader',
+      description: 'Steelers fan with excellent food opinions + LOTR reader',
+      conditions: [
+        { questionId: 'football_team', value: 'steelers' },
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+        { questionId: 'lutheran', value: 'no' },
+        { questionId: 'lotr', value: 'yes' },
+      ],
+      verdict: 'approved',
+      message:
+        "A Steelers fan with impeccable food opinions and excellent literary taste! My strong approval! We'll convert them before they join the family.",
+      emoji: '⭐',
+      priority: 95.5,
     },
 
     // Excellent Steelers fan - not Lutheran but great otherwise (90 points)
@@ -199,6 +271,42 @@ export const questionnaireConfig: QuestionnaireConfig = {
       priority: 95,
     },
 
+    // Lutheran + perfect food + LOTR superfan
+    {
+      id: 'lutheran-perfect-food-lotr-superfan',
+      description: 'Lutheran with impeccable food opinions + LOTR superfan',
+      conditions: [
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+        { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'lotr', value: 'yes-second-breakfast' },
+      ],
+      minScore: 60,
+      verdict: 'approved',
+      message:
+        "A Lutheran with impeccable food opinions and a true scholar of Middle-earth! They can join the family! We'll work on converting them to Steelers fans.",
+      emoji: '✝️',
+      priority: 86,
+    },
+
+    // Lutheran + perfect food + LOTR reader
+    {
+      id: 'lutheran-perfect-food-lotr-reader',
+      description: 'Lutheran with impeccable food opinions + LOTR reader',
+      conditions: [
+        { questionId: 'pineapple_pizza', value: 'no' },
+        { questionId: 'ketchup_hotdog', value: 'no' },
+        { questionId: 'lutheran', value: 'yes' },
+        { questionId: 'lotr', value: 'yes' },
+      ],
+      minScore: 60,
+      verdict: 'approved',
+      message:
+        "A Lutheran with impeccable food opinions and excellent literary taste! They can join the family! We'll work on converting them to Steelers fans.",
+      emoji: '✝️',
+      priority: 85.5,
+    },
+
     // Perfect food opinions and Lutheran, just need to convert to Steelers
     {
       id: 'lutheran-perfect-food',
@@ -214,6 +322,34 @@ export const questionnaireConfig: QuestionnaireConfig = {
         "As a Lutheran with impeccable food opinions, they can join the family! We'll work on converting them to Steelers fans.",
       emoji: '✝️',
       priority: 85,
+    },
+
+    // LOTR superfan with good overall score
+    {
+      id: 'lotr-superfan',
+      description: 'LOTR superfan with strong overall score',
+      conditions: [{ questionId: 'lotr', value: 'yes-second-breakfast' }],
+      minScore: 60,
+      verdict: 'approved',
+      message:
+        'A true scholar and person of culture! Their love of second breakfast and strong character make them worthy.',
+      emoji: '📖',
+      priority: 75,
+    },
+
+    // LOTR reader with good score
+    {
+      id: 'lotr-reader',
+      description: 'LOTR reader with good score',
+      conditions: [
+        { questionId: 'lotr', value: 'yes' },
+      ],
+      minScore: 55,
+      verdict: 'approved',
+      message:
+        'They have read the books and made other good choices. A person of taste and wisdom!',
+      emoji: '📚',
+      priority: 70,
     },
 
     // Good food opinions, not Lutheran and not a Steelers fan
