@@ -28,7 +28,7 @@ import type { QuestionnaireConfig, AnswerOption } from '../types/questions'
  */
 
 const NFL_TEAMS: AnswerOption[] = [
-  { value: '', label: 'Select a team...', weight: 0, color: 'orange' },
+  { value: '', label: 'Select a team...', weight: 0, color: 'default' },
   { value: 'cardinals', label: 'Arizona Cardinals', weight: 0, color: 'orange' },
   { value: 'falcons', label: 'Atlanta Falcons', weight: 0, color: 'orange' },
   {
