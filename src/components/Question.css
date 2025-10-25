@@ -80,28 +80,28 @@
   background-color: #f0f0ff;
 }
 
-/* Color-coded answer states - only when checked */
+/* Color-coded answer states - full styling only when checked */
 .radio-label--green.radio-label--checked {
-  border-color: #059669;
-  background-color: #d1fae5;
+  border-color: #059669 !important;
+  background-color: #d1fae5 !important;
   color: #065f46;
 }
 
 .radio-label--red.radio-label--checked {
-  border-color: #dc2626;
-  background-color: #fee2e2;
+  border-color: #dc2626 !important;
+  background-color: #fee2e2 !important;
   color: #991b1b;
 }
 
 .radio-label--yellow.radio-label--checked {
-  border-color: #d97706;
-  background-color: #fef3c7;
+  border-color: #d97706 !important;
+  background-color: #fef3c7 !important;
   color: #92400e;
 }
 
 .radio-label--orange.radio-label--checked {
-  border-color: #ea580c;
-  background-color: #fed7aa;
+  border-color: #ea580c !important;
+  background-color: #fed7aa !important;
   color: #9a3412;
 }
 
@@ -154,28 +154,28 @@
     background-color: #2a2a4a;
   }
 
-  /* Dark mode color overrides - only when checked */
+  /* Dark mode color overrides - full styling only when checked */
   .radio-label--green.radio-label--checked {
-    border-color: #10b981;
-    background-color: #064e3b;
+    border-color: #10b981 !important;
+    background-color: #064e3b !important;
     color: #d1fae5;
   }
 
   .radio-label--red.radio-label--checked {
-    border-color: #ef4444;
-    background-color: #7f1d1d;
+    border-color: #ef4444 !important;
+    background-color: #7f1d1d !important;
     color: #fecaca;
   }
 
   .radio-label--yellow.radio-label--checked {
-    border-color: #fbbf24;
-    background-color: #78350f;
+    border-color: #fbbf24 !important;
+    background-color: #78350f !important;
     color: #fef3c7;
   }
 
   .radio-label--orange.radio-label--checked {
-    border-color: #fb923c;
-    background-color: #7c2d12;
+    border-color: #fb923c !important;
+    background-color: #7c2d12 !important;
     color: #fed7aa;
   }
 
