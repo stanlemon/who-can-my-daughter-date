@@ -64,30 +64,28 @@
   gap: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .app-header h1 {
-    color: #ffffff;
-  }
+:root.dark .app-header h1 {
+  color: #ffffff;
+}
 
-  .app-subtitle {
-    color: #aaa;
-  }
+:root.dark .app-subtitle {
+  color: #aaa;
+}
 
-  .app-footer {
-    border-top-color: #444;
-    background-color: #1a1a1a;
-  }
+:root.dark .app-footer {
+  border-top-color: #444;
+  background-color: #1a1a1a;
+}
 
-  .footer-credit,
-  .footer-source {
-    color: #aaa;
-  }
+:root.dark .footer-credit,
+:root.dark .footer-source {
+  color: #aaa;
+}
 
-  .footer-link {
-    color: #646cff;
-  }
+:root.dark .footer-link {
+  color: #646cff;
+}
 
-  .footer-link:hover {
-    color: #747bff;
-  }
+:root.dark .footer-link:hover {
+  color: #747bff;
 }

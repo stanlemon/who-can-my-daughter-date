@@ -1,9 +1,28 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import App from './App'
 
 describe('App', () => {
+  beforeEach(() => {
+    localStorage.clear()
+    document.documentElement.classList.remove('dark')
+
+    const matchMediaMock = {
+      matches: false,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }
+
+    vi.stubGlobal('matchMedia', vi.fn(() => matchMediaMock))
+  })
+
+  it('renders the theme toggle button', () => {
+    render(<App />)
+    const themeToggle = screen.getByRole('button', { name: /switch to dark mode/i })
+    expect(themeToggle).toBeInTheDocument()
+  })
+
   it('renders the main heading', () => {
     render(<App />)
     const heading = screen.getByRole('heading', { level: 1 })

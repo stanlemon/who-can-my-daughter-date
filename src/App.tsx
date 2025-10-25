@@ -3,6 +3,7 @@ import { Heart, Github } from 'lucide-react'
 import { Questionnaire } from './components/Questionnaire'
 import { DisqualifiedOverlay } from './components/DisqualifiedOverlay'
 import { ResultSummary } from './components/ResultSummary'
+import { ThemeToggle } from './components/ThemeToggle'
 import { QuestionnaireEvaluator } from './utils/evaluator'
 import { questionnaireConfig } from './config/questionnaire'
 import type { EvaluationResult } from './types/questions'
@@ -36,6 +37,8 @@ function App() {
 
   return (
     <div className="app">
+      <ThemeToggle />
+
       {result?.isImmediate && showOverlay && (
         <DisqualifiedOverlay message={result.message} onDismiss={handleDismissOverlay} />
       )}
