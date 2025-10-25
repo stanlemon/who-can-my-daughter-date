@@ -1,6 +1,6 @@
 export type QuestionType = 'select' | 'radio'
 
-export type AnswerColor = 'green' | 'red' | 'yellow' | 'default'
+export type AnswerColor = 'green' | 'red' | 'yellow' | 'orange' | 'default'
 
 export interface AnswerOption {
   value: string

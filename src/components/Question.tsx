@@ -46,12 +46,13 @@ export function Question({ question, value, onChange }: QuestionProps) {
         <div className="question-options">
           {question.options.map((option) => {
             const isChecked = value === option.value
-            const colorClass = isChecked && option.color ? `radio-label--${option.color}` : ''
+            const colorClass = option.color ? `radio-label--${option.color}` : ''
+            const checkedClass = isChecked ? 'radio-label--checked' : ''
 
             return (
               <label
                 key={option.value}
-                className={`radio-label ${colorClass}`.trim()}
+                className={`radio-label ${colorClass} ${checkedClass}`.trim()}
                 data-color={option.color}
               >
                 <input

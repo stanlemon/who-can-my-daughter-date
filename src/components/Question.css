@@ -73,7 +73,7 @@
   background-color: #f0f0ff;
 }
 
-/* Color-coded answer states when selected */
+/* Color-coded answer states - always visible */
 .radio-label--green {
   border-color: #059669;
   background-color: #d1fae5;
@@ -87,13 +87,40 @@
 }
 
 .radio-label--yellow {
-  border-color: #f59e0b;
+  border-color: #d97706;
   background-color: #fef3c7;
   color: #92400e;
 }
 
+.radio-label--orange {
+  border-color: #ea580c;
+  background-color: #fed7aa;
+  color: #9a3412;
+}
+
 .radio-label--default {
-  /* Keep the default checked state */
+  /* Keep the default styling */
+}
+
+/* Enhance color when checked */
+.radio-label--green.radio-label--checked {
+  background-color: #a7f3d0;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+}
+
+.radio-label--red.radio-label--checked {
+  background-color: #fecaca;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+.radio-label--yellow.radio-label--checked {
+  background-color: #fde68a;
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+}
+
+.radio-label--orange.radio-label--checked {
+  background-color: #fdba74;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2);
 }
 
 .radio-input {
@@ -150,5 +177,32 @@
     border-color: #fbbf24;
     background-color: #78350f;
     color: #fef3c7;
+  }
+
+  .radio-label--orange {
+    border-color: #fb923c;
+    background-color: #7c2d12;
+    color: #fed7aa;
+  }
+
+  /* Enhance dark mode checked states */
+  .radio-label--green.radio-label--checked {
+    background-color: #047857;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+  }
+
+  .radio-label--red.radio-label--checked {
+    background-color: #991b1b;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+  }
+
+  .radio-label--yellow.radio-label--checked {
+    background-color: #92400e;
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3);
+  }
+
+  .radio-label--orange.radio-label--checked {
+    background-color: #9a3412;
+    box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.3);
   }
 }
