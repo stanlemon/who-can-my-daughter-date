@@ -236,6 +236,7 @@ describe('QuestionnaireEvaluator', () => {
         pineapple_pizza: 'no',
         ketchup_hotdog: 'no',
         lutheran: 'yes',
+        lotr: 'yes-second-breakfast',
       })
 
       expect(evaluator.isComplete(answers)).toBe(true)

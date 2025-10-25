@@ -123,12 +123,45 @@ export const questionnaireConfig: QuestionnaireConfig = {
       ],
       emoji: '⛪',
     },
+    {
+      id: 'lotr',
+      text: 'They have read Lord of the Rings',
+      type: 'radio',
+      options: [
+        {
+          value: 'yes-second-breakfast',
+          label: 'Yes, and my second breakfast was delicious',
+          weight: 15,
+          tags: ['lotr-superfan'],
+          color: 'green',
+        },
+        { value: 'yes', label: 'Yes', weight: 10, tags: ['lotr-read'], color: 'green' },
+        {
+          value: 'movie-directors-cut',
+          label: "No, but I saw the director's cut movie",
+          weight: 5,
+          tags: ['lotr-movie'],
+          color: 'default',
+        },
+        {
+          value: 'sauron',
+          label: 'I am Sauron',
+          weight: -5,
+          tags: ['lotr-villain'],
+          color: 'red',
+        },
+        { value: 'no', label: 'No', weight: -5, tags: ['lotr-no'], color: 'yellow' },
+        { value: 'huh', label: 'Huh?', weight: -10, tags: ['lotr-unaware'], color: 'red' },
+      ],
+      emoji: '📚',
+    },
   ],
 
   scoreThresholds: {
-    excellent: 80, // Steelers (40) + No pineapple (25) + No ketchup (25) + Lutheran (10) = 100
-    good: 60, // Strong approval threshold
+    excellent: 80, // Strong approval threshold
+    good: 60, // Good approval threshold
     acceptable: 50, // Conditional approval threshold
+    // Perfect score: Steelers (40) + No pineapple (25) + No ketchup (25) + Lutheran (10) + LOTR superfan (15) = 115
   },
 
   rules: [
