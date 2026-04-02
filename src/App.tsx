@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react'
-import { Heart, Github } from 'lucide-react'
+import { ExternalLink, Heart } from 'lucide-react'
 import { Questionnaire } from './components/Questionnaire'
 import { DisqualifiedOverlay } from './components/DisqualifiedOverlay'
 import { ResultSummary } from './components/ResultSummary'
@@ -79,7 +79,7 @@ function App() {
             rel="noopener noreferrer"
             className="footer-link footer-link--github"
           >
-            <Github size={16} />
+            <ExternalLink size={16} />
             <span>View Source Code</span>
           </a>
         </p>

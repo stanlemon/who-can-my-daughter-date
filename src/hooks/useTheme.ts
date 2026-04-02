@@ -25,7 +25,7 @@ const getStoredThemeMode = (): ThemeMode => {
 }
 
 export const useTheme = (): UseThemeReturn => {
-  const [themeMode, setThemeModeState] = useState<ThemeMode>(getStoredThemeMode)
+  const [themeMode, setThemeMode] = useState<ThemeMode>(getStoredThemeMode)
   const [systemTheme, setSystemTheme] = useState<Theme>(getSystemTheme)
 
   const theme: Theme = themeMode === 'system' ? systemTheme : themeMode
@@ -49,23 +49,23 @@ export const useTheme = (): UseThemeReturn => {
     }
   }, [theme])
 
-  const setThemeMode = (mode: ThemeMode): void => {
-    setThemeModeState(mode)
+  const updateThemeMode = (mode: ThemeMode): void => {
+    setThemeMode(mode)
     localStorage.setItem('theme-mode', mode)
   }
 
   const toggleTheme = (): void => {
     if (themeMode === 'system') {
-      setThemeMode(systemTheme === 'dark' ? 'light' : 'dark')
+      updateThemeMode(systemTheme === 'dark' ? 'light' : 'dark')
     } else {
-      setThemeMode(theme === 'dark' ? 'light' : 'dark')
+      updateThemeMode(theme === 'dark' ? 'light' : 'dark')
     }
   }
 
   return {
     theme,
     themeMode,
-    setThemeMode,
+    setThemeMode: updateThemeMode,
     toggleTheme,
   }
 }

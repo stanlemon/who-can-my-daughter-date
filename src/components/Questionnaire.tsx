@@ -11,7 +11,7 @@ interface QuestionnaireProps {
 }
 
 export function Questionnaire({ questions, evaluator, onEvaluation }: QuestionnaireProps) {
-  const [answers, setAnswers] = useState<UserAnswers>(new Map())
+  const [answers, setAnswers] = useState<UserAnswers>(() => new Map())
 
   const handleAnswerChange = (questionId: string, value: string) => {
     setAnswers((prev) => {
