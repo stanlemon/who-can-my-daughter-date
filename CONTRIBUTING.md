@@ -140,8 +140,7 @@ Add pineapple pizza question validation
 This project uses:
 
 - **TypeScript** in strict mode - no `any` types
-- **ESLint** for code linting
-- **Prettier** for code formatting
+- **Biome** for code linting and formatting
 - **React 19** with functional components and hooks
 
 ### Key Guidelines

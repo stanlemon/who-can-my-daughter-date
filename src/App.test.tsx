@@ -14,7 +14,10 @@ describe('App', () => {
       removeEventListener: vi.fn(),
     }
 
-    vi.stubGlobal('matchMedia', vi.fn(() => matchMediaMock))
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => matchMediaMock)
+    )
   })
 
   it('renders the theme toggle button', () => {

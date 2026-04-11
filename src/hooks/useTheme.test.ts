@@ -3,7 +3,11 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useTheme } from './useTheme'
 
 describe('useTheme', () => {
-  let matchMediaMock: { matches: boolean; addEventListener: ReturnType<typeof vi.fn>; removeEventListener: ReturnType<typeof vi.fn> }
+  let matchMediaMock: {
+    matches: boolean
+    addEventListener: ReturnType<typeof vi.fn>
+    removeEventListener: ReturnType<typeof vi.fn>
+  }
 
   beforeEach(() => {
     localStorage.clear()
@@ -15,7 +19,10 @@ describe('useTheme', () => {
       removeEventListener: vi.fn(),
     }
 
-    vi.stubGlobal('matchMedia', vi.fn(() => matchMediaMock))
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => matchMediaMock)
+    )
   })
 
   it('defaults to system theme mode', () => {

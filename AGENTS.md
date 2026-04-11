@@ -18,7 +18,7 @@ Answer a series of questions to determine if someone is an acceptable dating can
 - **Framework**: React 19.x
 - **Language**: TypeScript (strict mode enabled)
 - **Testing**: Vitest + React Testing Library
-- **Linting**: ESLint (flat config) + Prettier
+- **Linting**: Biome
 - **Icons**: Lucide React (tree-shakeable)
 - **Runtime**: Node.js 22.20.0 (see .nvmrc)
 - **Deployment**: Cloudflare Pages
@@ -34,7 +34,7 @@ npm run test:watch   # Run tests in watch mode
 npm run test:ui      # Run tests with UI
 npm run lint         # Check linting
 npm run lint:fix     # Fix linting issues
-npm run format       # Format code with Prettier
+npm run format       # Format code with Biome
 npm run type-check   # TypeScript type checking
 ```
 
@@ -149,8 +149,8 @@ describe('MyComponent', () => {
 - Interface over type for object shapes
 
 ### Linting & Formatting
-- ESLint must pass before committing
-- Prettier for consistent formatting
+- Biome linting must pass before committing
+- Biome handles consistent formatting
 - Run `npm run lint:fix` to auto-fix issues
 - VSCode auto-formats on save
 
@@ -248,7 +248,7 @@ src/
 - No semicolons
 - Trailing commas in ES5
 - Max line length: 100 characters
-- See `.prettierrc` for full configuration
+- See `biome.json` for full configuration
 
 ## Project-Specific Context
 

@@ -24,12 +24,7 @@ export function DisqualifiedOverlay({ message, onDismiss }: DisqualifiedOverlayP
 
   return (
     <div className="disqualified-overlay" role="alert" aria-live="assertive">
-      <button
-        className="disqualified-close"
-        onClick={onDismiss}
-        aria-label="Dismiss"
-        type="button"
-      >
+      <button className="disqualified-close" onClick={onDismiss} aria-label="Dismiss" type="button">
         <X size={32} strokeWidth={2} />
       </button>
       <div className="disqualified-content">

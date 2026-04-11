@@ -4,7 +4,11 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { ThemeToggle } from './ThemeToggle'
 
 describe('ThemeToggle', () => {
-  let matchMediaMock: { matches: boolean; addEventListener: ReturnType<typeof vi.fn>; removeEventListener: ReturnType<typeof vi.fn> }
+  let matchMediaMock: {
+    matches: boolean
+    addEventListener: ReturnType<typeof vi.fn>
+    removeEventListener: ReturnType<typeof vi.fn>
+  }
 
   beforeEach(() => {
     localStorage.clear()
@@ -16,7 +20,10 @@ describe('ThemeToggle', () => {
       removeEventListener: vi.fn(),
     }
 
-    vi.stubGlobal('matchMedia', vi.fn(() => matchMediaMock))
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => matchMediaMock)
+    )
   })
 
   it('renders a button', () => {

@@ -4,7 +4,7 @@
 
 A frontend-only web application built with Vite, React 19, and TypeScript that evaluates dating compatibility through a humorous questionnaire system. Users answer questions about football team preferences, food opinions, and religious affiliation, and the app determines approval status based on configurable rules.
 
-**Tech Stack:** Vite 7.x, React 19.x, TypeScript (strict), Vitest, ESLint, Prettier, Lucide React icons, Cloudflare Pages deployment
+**Tech Stack:** Vite 7.x, React 19.x, TypeScript (strict), Vitest, Biome, Lucide React icons, Cloudflare Pages deployment
 
 **Node Version:** 22.20.0 (see .nvmrc)
 
@@ -18,7 +18,7 @@ npm test             # Run tests once
 npm run test:watch   # Run tests in watch mode
 npm run lint         # Check linting
 npm run lint:fix     # Fix linting issues
-npm run format       # Format code with Prettier
+npm run format       # Format code with Biome
 npm run type-check   # TypeScript type checking
 ```
 

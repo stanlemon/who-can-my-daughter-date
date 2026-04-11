@@ -1,6 +1,6 @@
 # Who Can My Daughter Date?
 
-A humorous questionnaire application that evaluates dating compatibility based on important life choices like sports team allegiance, pizza toppings, and condiment preferences. Built with React 19, TypeScript, and Vite.
+A humorous questionnaire application that evaluates dating compatibility based on important life choices like sports team allegiance, pizza toppings, and condiment preferences. Built with React 19, TypeScript, Vite, and Biome.
 
 ## Features
 
@@ -53,9 +53,9 @@ The application will be available at `http://localhost:5173`
 - `npm test` - Run tests once
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:ui` - Run tests with UI
-- `npm run lint` - Check code for linting errors
-- `npm run lint:fix` - Fix linting errors automatically
-- `npm run format` - Format code with Prettier
+- `npm run lint` - Check code for linting errors with Biome
+- `npm run lint:fix` - Fix linting errors automatically with Biome
+- `npm run format` - Format code with Biome
 - `npm run type-check` - Run TypeScript type checking
 
 ## Tech Stack
@@ -65,8 +65,7 @@ The application will be available at `http://localhost:5173`
 - **Vite 7** - Build tool and dev server
 - **Vitest** - Unit testing framework
 - **React Testing Library** - Component testing utilities
-- **ESLint** - Code linting
-- **Prettier** - Code formatting
+- **Biome** - Code linting and formatting
 
 ## Testing
 
@@ -175,8 +174,7 @@ The application uses a config-driven questionnaire evaluation system:
 │   └── index.css                    # Global styles
 ├── .nvmrc                           # Node version specification
 ├── CLAUDE.md                        # Project instructions for Claude Code
-├── eslint.config.js                 # ESLint configuration
-├── .prettierrc                      # Prettier configuration
+├── biome.json                       # Biome configuration
 ├── tsconfig.json                    # TypeScript configuration
 ├── vite.config.ts                   # Vite and Vitest configuration
 ├── wrangler.toml                    # Cloudflare Pages configuration
@@ -187,8 +185,7 @@ The application uses a config-driven questionnaire evaluation system:
 
 The project is configured with:
 - **TypeScript strict mode** for maximum type safety
-- **ESLint** with recommended rules for React and TypeScript
-- **Prettier** for consistent code formatting
+- **Biome** with formatting settings and React-friendly linting rules
 - **Vitest** for fast unit testing
 - **React Testing Library** for component testing best practices
 

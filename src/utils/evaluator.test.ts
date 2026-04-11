@@ -316,10 +316,7 @@ describe('QuestionnaireEvaluator', () => {
         ...questionnaireConfig.rules,
       ]
 
-      const customEvaluator = new QuestionnaireEvaluator(
-        questionnaireConfig.questions,
-        customRules
-      )
+      const customEvaluator = new QuestionnaireEvaluator(questionnaireConfig.questions, customRules)
 
       const answers = createAnswers({
         football_team: 'steelers',
@@ -354,10 +351,7 @@ describe('QuestionnaireEvaluator', () => {
         },
       ]
 
-      const customEvaluator = new QuestionnaireEvaluator(
-        questionnaireConfig.questions,
-        customRules
-      )
+      const customEvaluator = new QuestionnaireEvaluator(questionnaireConfig.questions, customRules)
 
       const answers = createAnswers({
         football_team: 'cowboys',
@@ -394,10 +388,7 @@ describe('QuestionnaireEvaluator', () => {
         },
       ]
 
-      const customEvaluator = new QuestionnaireEvaluator(
-        questionnaireConfig.questions,
-        customRules
-      )
+      const customEvaluator = new QuestionnaireEvaluator(questionnaireConfig.questions, customRules)
 
       const answers = createAnswers({
         football_team: 'packers', // -10 points
@@ -432,10 +423,7 @@ describe('QuestionnaireEvaluator', () => {
         },
       ]
 
-      const customEvaluator = new QuestionnaireEvaluator(
-        questionnaireConfig.questions,
-        customRules
-      )
+      const customEvaluator = new QuestionnaireEvaluator(questionnaireConfig.questions, customRules)
 
       const answers = createAnswers({
         football_team: 'steelers', // 40 points
@@ -470,10 +458,7 @@ describe('QuestionnaireEvaluator', () => {
         },
       ]
 
-      const customEvaluator = new QuestionnaireEvaluator(
-        questionnaireConfig.questions,
-        customRules
-      )
+      const customEvaluator = new QuestionnaireEvaluator(questionnaireConfig.questions, customRules)
 
       const answers = createAnswers({
         football_team: 'colts', // 10 points
@@ -510,10 +495,7 @@ describe('QuestionnaireEvaluator', () => {
         },
       ]
 
-      const customEvaluator = new QuestionnaireEvaluator(
-        questionnaireConfig.questions,
-        customRules
-      )
+      const customEvaluator = new QuestionnaireEvaluator(questionnaireConfig.questions, customRules)
 
       const answers = createAnswers({
         football_team: 'steelers',
