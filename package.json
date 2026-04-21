@@ -1,6 +1,6 @@
 {
   "name": "who-can-my-daughter-date",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "description": "A humorous questionnaire application that evaluates dating compatibility based on important life choices",
   "author": "Stan Lemon <86314+stanlemon@users.noreply.github.com>",
@@ -44,7 +44,7 @@
     "@vitest/ui": "4.1.4",
     "jsdom": "29.0.2",
     "typescript": "6.0.3",
-    "vite": "8.0.8",
+    "vite": "8.0.9",
     "vitest": "4.1.4"
   },
   "dependencies": {
