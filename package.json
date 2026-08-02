@@ -1,6 +1,6 @@
 {
   "name": "who-can-my-daughter-date",
-  "version": "1.0.49",
+  "version": "1.0.50",
   "type": "module",
   "description": "A humorous questionnaire application that evaluates dating compatibility based on important life choices",
   "author": "Stan Lemon <86314+stanlemon@users.noreply.github.com>",
@@ -33,22 +33,22 @@
     "type-check": "tsc -b --noEmit"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.5",
+    "@biomejs/biome": "2.5.6",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "6.0.4",
+    "@vitejs/plugin-react": "6.0.5",
     "@vitest/coverage-v8": "4.1.10",
     "@vitest/ui": "4.1.10",
     "jsdom": "29.1.1",
     "typescript": "6.0.3",
-    "vite": "8.1.5",
+    "vite": "8.2.0",
     "vitest": "4.1.10"
   },
   "dependencies": {
-    "lucide-react": "^1.27.0",
+    "lucide-react": "^1.28.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   }
