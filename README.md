@@ -16,7 +16,7 @@ A humorous questionnaire application that evaluates dating compatibility based o
 
 ## Prerequisites
 
-- Node.js 22.20.0 (see `.nvmrc`)
+- Node.js version specified in `.nvmrc`
 - npm (comes with Node.js)
 - nvm (recommended for Node version management)
 
@@ -62,7 +62,7 @@ The application will be available at `http://localhost:5173`
 
 - **React 19** - UI library
 - **TypeScript** - Type safety
-- **Vite 7** - Build tool and dev server
+- **Vite 8** - Build tool and dev server
 - **Vitest** - Unit testing framework
 - **React Testing Library** - Component testing utilities
 - **Biome** - Code linting and formatting
@@ -100,7 +100,7 @@ The built files will be in the `dist` directory.
    - **Build command**: `npm run build`
    - **Build output directory**: `dist`
    - **Root directory**: `/`
-   - **Node version**: Set environment variable `NODE_VERSION=22.20.0`
+   - **Node version**: Set `NODE_VERSION` to the version in `.nvmrc`
 5. Click "Save and Deploy"
 
 Cloudflare Pages will automatically deploy on every push to your main branch.
