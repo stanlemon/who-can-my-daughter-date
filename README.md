@@ -16,7 +16,7 @@ A humorous questionnaire application that evaluates dating compatibility based o
 
 ## Prerequisites
 
-- Node.js 22.20.0 (see `.nvmrc`)
+- Node.js version specified in `.nvmrc`
 - npm (comes with Node.js)
 - nvm (recommended for Node version management)
 
@@ -51,6 +51,7 @@ The application will be available at `http://localhost:5173`
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build locally
 - `npm test` - Run tests once
+- `npm run test:coverage` - Run tests and enforce coverage floors
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:ui` - Run tests with UI
 - `npm run lint` - Check code for linting errors with Biome
@@ -62,7 +63,7 @@ The application will be available at `http://localhost:5173`
 
 - **React 19** - UI library
 - **TypeScript** - Type safety
-- **Vite 7** - Build tool and dev server
+- **Vite 8** - Build tool and dev server
 - **Vitest** - Unit testing framework
 - **React Testing Library** - Component testing utilities
 - **Biome** - Code linting and formatting
@@ -80,6 +81,8 @@ Run tests in watch mode during development:
 ```bash
 npm run test:watch
 ```
+
+CI runs `npm run test:coverage` with floors of 95% statements, 90% branches, 100% functions, and 97% lines. Coverage includes production TypeScript under `src/`, including files not imported by tests. The App regression completes the real six-question configuration, changes an answer, and checks that an incomplete questionnaire clears the verdict. Tests use jsdom without launching a browser.
 
 ## Building for Production
 
@@ -100,7 +103,7 @@ The built files will be in the `dist` directory.
    - **Build command**: `npm run build`
    - **Build output directory**: `dist`
    - **Root directory**: `/`
-   - **Node version**: Set environment variable `NODE_VERSION=22.20.0`
+   - **Node version**: Set `NODE_VERSION` to the version in `.nvmrc`
 5. Click "Save and Deploy"
 
 Cloudflare Pages will automatically deploy on every push to your main branch.
@@ -128,7 +131,7 @@ wrangler pages deploy dist --project-name=who-can-my-daughter-date
 GitHub Actions workflow is configured to:
 - Run linting
 - Run type checking
-- Run tests
+- Run tests with required coverage
 - Build the application
 - Upload build artifacts
 

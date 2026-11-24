@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import App from './App'
@@ -54,6 +54,53 @@ describe('App', () => {
     render(<App />)
     const main = screen.getByRole('main')
     expect(main).toBeInTheDocument()
+  })
+
+  it('evaluates a complete real questionnaire and updates or clears the verdict when answers change', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    const team = screen.getByRole('combobox', { name: /Their football team is/i })
+    await user.selectOptions(team, 'steelers')
+    await user.click(
+      within(screen.getByRole('group', { name: /pineapple belongs on pizza/i })).getByRole(
+        'radio',
+        { name: 'No' }
+      )
+    )
+    await user.click(
+      within(screen.getByRole('group', { name: /ketchup belongs on a hot dog/i })).getByRole(
+        'radio',
+        { name: 'No' }
+      )
+    )
+    await user.click(
+      within(screen.getByRole('group', { name: /They are Lutheran/i })).getByRole('radio', {
+        name: 'Yes',
+      })
+    )
+    const siblings = screen.getByRole('group', { name: /nice to my siblings/i })
+    await user.click(within(siblings).getByRole('radio', { name: 'Yes' }))
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+
+    await user.click(
+      within(screen.getByRole('group', { name: /read Lord of the Rings/i })).getByRole('radio', {
+        name: 'Yes, and my second breakfast was delicious',
+      })
+    )
+    const approved = await screen.findByRole('status')
+    expect(within(approved).getByRole('heading', { name: /Approved/ })).toBeInTheDocument()
+    expect(approved).toHaveTextContent('a true scholar of Middle-earth')
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+
+    await user.click(within(siblings).getByRole('radio', { name: 'No' }))
+    const rejected = await screen.findByRole('status')
+    expect(within(rejected).getByRole('heading', { name: /Rejected/ })).toBeInTheDocument()
+    expect(rejected).toHaveTextContent('Being unkind to your siblings is a major red flag')
+
+    await user.selectOptions(team, '')
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 
   describe('Overlay behavior', () => {

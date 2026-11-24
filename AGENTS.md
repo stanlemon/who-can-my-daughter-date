@@ -14,13 +14,13 @@ Answer a series of questions to determine if someone is an acceptable dating can
 
 ## Tech Stack
 
-- **Build Tool**: Vite 7.x
+- **Build Tool**: Vite 8.x
 - **Framework**: React 19.x
 - **Language**: TypeScript (strict mode enabled)
 - **Testing**: Vitest + React Testing Library
 - **Linting**: Biome
 - **Icons**: Lucide React (tree-shakeable)
-- **Runtime**: Node.js 22.20.0 (see .nvmrc)
+- **Runtime**: Node.js version specified in `.nvmrc`
 - **Deployment**: Cloudflare Pages
 
 ## Development Commands
@@ -30,6 +30,7 @@ npm run dev          # Start dev server (http://localhost:5173)
 npm run build        # Production build
 npm run preview      # Preview production build
 npm test             # Run tests once
+npm run test:coverage # Run tests and enforce coverage floors
 npm run test:watch   # Run tests in watch mode
 npm run test:ui      # Run tests with UI
 npm run lint         # Check linting
@@ -57,11 +58,13 @@ The app is built around a config-driven questionnaire evaluation system:
 - **EvaluationResult**: Final verdict with message and display type
 
 #### Configuration (src/config/questionnaire.ts)
-- **Questions Array**: Defines all questions (currently 4):
+- **Questions Array**: Defines all questions (currently 6):
   1. NFL team preference (dropdown)
   2. Pineapple on pizza opinion (radio)
   3. Ketchup on hot dog opinion (radio)
   4. Lutheran affiliation (radio)
+  5. Kindness to siblings (radio)
+  6. Lord of the Rings reading (radio)
 - **Rules Array**: Priority-ordered rules that evaluate answer combinations
   - Higher priority rules checked first
   - Rules can match specific values or tags
@@ -174,7 +177,7 @@ src/
 
 ### CI/CD
 - GitHub Actions runs on all pushes to main and PRs
-- Pipeline checks: lint → type-check → test → build
+- Pipeline checks: lint → type-check → test with required coverage → build
 - All checks must pass before merging
 
 ## Cloudflare Pages Deployment
@@ -182,7 +185,7 @@ src/
 ### Build Configuration
 - **Build command**: `npm run build`
 - **Build output directory**: `dist`
-- **Node version**: 22.20.0 (set via NODE_VERSION env var)
+- **Node version**: the version in `.nvmrc` (set via NODE_VERSION env var)
 
 ### Deployment Methods
 1. **GitHub Integration** (recommended): Auto-deploy on push to main
@@ -195,7 +198,7 @@ src/
 ## Important Notes
 
 ### Node Version Management
-- **Always use Node 22.20.0** specified in `.nvmrc`
+- **Always use the Node.js version** specified in `.nvmrc`
 - GitHub Actions reads from `.nvmrc` automatically
 - Use `nvm use` locally to switch versions
 
@@ -261,7 +264,7 @@ A humorous questionnaire that evaluates dating compatibility based on personal p
 The system provides immediate feedback for deal-breakers and nuanced evaluations for complex combinations of answers.
 
 ### Current Features
-- 4 configurable questions with immediate disqualifier support
+- 6 configurable questions with immediate disqualifier support
 - Priority-based rule engine for combination logic
 - Immediate visual feedback (red X overlay for hard nos)
 - Color-coded verdict summaries (green/yellow/red)
