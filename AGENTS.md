@@ -30,6 +30,7 @@ npm run dev          # Start dev server (http://localhost:5173)
 npm run build        # Production build
 npm run preview      # Preview production build
 npm test             # Run tests once
+npm run test:coverage # Run tests and enforce coverage floors
 npm run test:watch   # Run tests in watch mode
 npm run test:ui      # Run tests with UI
 npm run lint         # Check linting
@@ -176,7 +177,7 @@ src/
 
 ### CI/CD
 - GitHub Actions runs on all pushes to main and PRs
-- Pipeline checks: lint → type-check → test → build
+- Pipeline checks: lint → type-check → test with required coverage → build
 - All checks must pass before merging
 
 ## Cloudflare Pages Deployment
